@@ -6,9 +6,12 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
 import { useProducts } from '@/contexts/ProductContext';
+import { useOnlineUsers } from '@/hooks/useOnlineUsers';
+import { Link } from 'react-router-dom';
 
 export default function Index() {
   const { products } = useProducts();
+  const onlineUsers = useOnlineUsers();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFlavor, setSelectedFlavor] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
@@ -27,25 +30,34 @@ export default function Index() {
       <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Icon name="Zap" className="text-white" size={24} />
+                <Icon name="Cigarette" className="text-primary-foreground" size={20} />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                VAPE SHOP
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                VapeShop
               </span>
+            </Link>
+            <div className="hidden md:flex items-center gap-6">
+              <Link to="/" className="text-foreground font-medium">Главная</Link>
+              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
+              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
+              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors">Акции</Link>
+              <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#catalog" className="text-sm hover:text-primary transition-colors">Каталог</a>
-              <a href="#about" className="text-sm hover:text-primary transition-colors">О магазине</a>
-              <a href="#delivery" className="text-sm hover:text-primary transition-colors">Доставка</a>
-              <a href="#promo" className="text-sm hover:text-primary transition-colors">Акции</a>
-              <a href="#blog" className="text-sm hover:text-primary transition-colors">Блог</a>
-              <a href="#faq" className="text-sm hover:text-primary transition-colors">FAQ</a>
+            <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
+                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-sm font-medium">{onlineUsers} онлайн</span>
+              </div>
+              <Button variant="ghost" size="icon" className="relative">
+                <Icon name="ShoppingCart" size={20} />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
+                  3
+                </span>
+              </Button>
             </div>
-            <Button size="icon" variant="ghost" className="md:hidden">
-              <Icon name="Menu" size={24} />
-            </Button>
           </div>
         </div>
       </nav>
@@ -64,15 +76,19 @@ export default function Index() {
             <p className="text-xl text-muted-foreground mb-8">
               Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей
             </p>
-            <div className="flex gap-4 justify-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                <Icon name="ShoppingCart" size={20} className="mr-2" />
-                Перейти в каталог
-              </Button>
-              <Button size="lg" variant="outline" className="border-2">
-                <Icon name="Sparkles" size={20} className="mr-2" />
-                Акции
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/catalog">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                  <Icon name="ShoppingCart" size={20} className="mr-2" />
+                  Перейти в каталог
+                </Button>
+              </Link>
+              <Link to="/promotions">
+                <Button size="lg" variant="outline" className="border-2">
+                  <Icon name="Sparkles" size={20} className="mr-2" />
+                  Акции
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
