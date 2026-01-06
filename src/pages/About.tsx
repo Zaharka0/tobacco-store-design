@@ -135,10 +135,7 @@ export default function About() {
                   Свяжитесь с нами любым удобным способом, и мы с радостью поможем вам!
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Button className="gap-2">
-                    <Icon name="Phone" size={18} />
-                    +7 (999) 123-45-67
-                  </Button>
+                  <Button className="gap-2">@whiteshishka_bot</Button>
                   <Button variant="outline" className="gap-2">
                     <Icon name="Mail" size={18} />
                     info@vapeshop.ru
