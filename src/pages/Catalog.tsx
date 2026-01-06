@@ -44,11 +44,9 @@ export default function Catalog() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="relative">
-                <Icon name="ShoppingCart" size={20} />
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs rounded-full flex items-center justify-center">
-                  3
-                </span>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Icon name="Phone" size={16} />
+                <span className="hidden sm:inline">+7 (999) 123-45-67</span>
               </Button>
             </div>
           </div>
@@ -146,8 +144,9 @@ export default function Catalog() {
                       </h3>
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-bold text-primary">{product.price}₽</span>
-                        <Button size="icon" className="rounded-full shadow-lg">
-                          <Icon name="Plus" size={18} />
+                        <Button size="sm" variant="outline" className="gap-1">
+                          <Icon name="Info" size={14} />
+                          Подробнее
                         </Button>
                       </div>
                     </div>
