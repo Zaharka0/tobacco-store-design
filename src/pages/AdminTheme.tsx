@@ -123,10 +123,16 @@ export default function AdminTheme() {
               </span>
             </div>
             <div className="flex gap-2">
+              <Link to="/admin/site-content">
+                <Button variant="outline" size="sm">
+                  <Icon name="Type" size={16} className="mr-2" />
+                  Тексты
+                </Button>
+              </Link>
               <Link to="/admin/content">
                 <Button variant="outline" size="sm">
                   <Icon name="FileText" size={16} className="mr-2" />
-                  Контент
+                  Блоки
                 </Button>
               </Link>
               <Link to="/admin">

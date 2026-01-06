@@ -18,6 +18,7 @@ import FAQ from "./pages/FAQ";
 import Admin from "./pages/Admin";
 import AdminContent from "./pages/AdminContent";
 import AdminTheme from "./pages/AdminTheme";
+import AdminSiteContent from "./pages/AdminSiteContent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ function AppContent() {
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="/admin/content" element={<ProtectedRoute><AdminContent /></ProtectedRoute>} />
               <Route path="/admin/theme" element={<ProtectedRoute><AdminTheme /></ProtectedRoute>} />
+              <Route path="/admin/site-content" element={<ProtectedRoute><AdminSiteContent /></ProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
