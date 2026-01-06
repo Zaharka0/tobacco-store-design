@@ -74,14 +74,20 @@ export default function Catalog() {
       <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <div className="flex items-center gap-2">
+              <Link 
+                to="/login" 
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                title="Админ-панель"
+              >
                 <Icon name="Cigarette" className="text-primary-foreground" size={20} />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                WhiteShishka
-              </span>
-            </Link>
+              </Link>
+              <Link to="/" className="flex items-center gap-2">
+                <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  WhiteShishka
+                </span>
+              </Link>
+            </div>
             <div className="hidden md:flex items-center gap-6">
               <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">Главная</Link>
               <Link to="/catalog" className="text-foreground font-medium">Каталог</Link>
@@ -130,7 +136,7 @@ export default function Catalog() {
                     <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
                       <TabsList className="grid grid-cols-1 gap-2 h-auto bg-transparent">
                         <TabsTrigger value="all" className="justify-start">Все товары</TabsTrigger>
-                        <TabsTrigger value="Одноразовые" className="justify-start">Одноразовые</TabsTrigger>
+                        <TabsTrigger value="Одноразки" className="justify-start">Одноразки</TabsTrigger>
                         <TabsTrigger value="Под-системы" className="justify-start">Под-системы</TabsTrigger>
                         <TabsTrigger value="Жидкости" className="justify-start">Жидкости</TabsTrigger>
                         <TabsTrigger value="Аксессуары" className="justify-start">Аксессуары</TabsTrigger>

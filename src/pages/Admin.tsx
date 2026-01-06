@@ -41,7 +41,7 @@ interface FormData {
 const initialFormData: FormData = {
   name: '',
   price: 0,
-  category: 'Одноразовые',
+  category: 'Одноразки',
   image_url: '',
   short_description: '',
   full_description: '',
@@ -255,7 +255,7 @@ export default function Admin() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Одноразовые">Одноразовые</SelectItem>
+                        <SelectItem value="Одноразки">Одноразки</SelectItem>
                         <SelectItem value="Под-системы">Под-системы</SelectItem>
                         <SelectItem value="Жидкости">Жидкости</SelectItem>
                         <SelectItem value="Аксессуары">Аксессуары</SelectItem>
