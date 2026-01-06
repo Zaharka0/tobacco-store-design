@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useOnlineUsers } from '@/hooks/useOnlineUsers';
+import { useSiteTexts } from '@/hooks/useSiteTexts';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
 
@@ -29,6 +30,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const onlineUsers = useOnlineUsers();
+  const { getText } = useSiteTexts();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -88,22 +90,22 @@ export default function Index() {
               </Link>
               <Link to="/" className="flex items-center gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  WhiteShishka
+                  {getText('site_name', 'WhiteShishka')}
                 </span>
               </Link>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="text-foreground font-medium">Главная</Link>
-              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
-              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
-              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors">Акции</Link>
-              <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
+              <Link to="/" className="text-foreground font-medium">{getText('nav_home', 'Главная')}</Link>
+              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_catalog', 'Каталог')}</Link>
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_about', 'О магазине')}</Link>
+              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_delivery', 'Доставка')}</Link>
+              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_promotions', 'Акции')}</Link>
+              <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_faq', 'FAQ')}</Link>
             </div>
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm font-medium">{onlineUsers} онлайн</span>
+                <span className="text-sm font-medium">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
               </div>
               <Button 
                 variant="outline" 
@@ -112,7 +114,7 @@ export default function Index() {
                 onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
               >
                 <Icon name="MessageCircle" size={16} />
-                <span className="hidden sm:inline">Написать в бот</span>
+                <span className="hidden sm:inline">{getText('nav_bot_button', 'Написать в бот')}</span>
               </Button>
             </div>
           </div>
@@ -125,25 +127,25 @@ export default function Index() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <Badge className="mb-4 px-4 py-1 text-sm bg-primary/20 text-primary border-primary/50">
-              18+
+              {getText('hero_badge', '18+')}
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
-              Премиум Вейп-Магазин
+              {getText('hero_title', 'Премиум Вейп-Магазин')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей
+              {getText('hero_subtitle', 'Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/catalog">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                   <Icon name="Eye" size={20} className="mr-2" />
-                  Смотреть каталог
+                  {getText('hero_catalog_button', 'Смотреть каталог')}
                 </Button>
               </Link>
               <Link to="/promotions">
                 <Button size="lg" variant="outline" className="border-2">
                   <Icon name="Sparkles" size={20} className="mr-2" />
-                  Акции
+                  {getText('hero_promotions_button', 'Акции')}
                 </Button>
               </Link>
             </div>
@@ -155,9 +157,9 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { icon: 'Cigarette', title: 'Одноразки', desc: 'Удобно и просто' },
-              { icon: 'Droplets', title: 'Жидкости', desc: 'Все вкусы' },
-              { icon: 'Puzzle', title: 'Аксессуары', desc: 'Для всех моделей' },
+              { icon: 'Cigarette', title: getText('cat1_title', 'Одноразки'), desc: getText('cat1_desc', 'Удобно и просто') },
+              { icon: 'Droplets', title: getText('cat2_title', 'Жидкости'), desc: getText('cat2_desc', 'Все вкусы') },
+              { icon: 'Puzzle', title: getText('cat3_title', 'Аксессуары'), desc: getText('cat3_desc', 'Для всех моделей') },
             ].map((item, i) => (
               <Card key={i} className="border-border/50 bg-card/80 backdrop-blur hover:border-primary/50 transition-all hover:scale-105 animate-scale-in" style={{ animationDelay: `${i * 100}ms` }}>
                 <CardContent className="p-6 text-center">
@@ -176,31 +178,31 @@ export default function Index() {
       <section id="catalog" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Каталог товаров</h2>
-            <p className="text-muted-foreground">Выберите категорию и фильтры для удобного поиска</p>
+            <h2 className="text-4xl font-bold mb-4">{getText('catalog_title', 'Каталог товаров')}</h2>
+            <p className="text-muted-foreground">{getText('catalog_subtitle', 'Выберите категорию и фильтры для удобного поиска')}</p>
           </div>
 
           <div className="mb-8 space-y-6">
             <div>
-              <label className="text-sm font-medium mb-3 block">Категория</label>
+              <label className="text-sm font-medium mb-3 block">{getText('catalog_filter_category', 'Категория')}</label>
               <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
                 <TabsList className="grid w-full grid-cols-4 bg-card/50">
-                  <TabsTrigger value="all">Все</TabsTrigger>
-                  <TabsTrigger value="Одноразки">Одноразки</TabsTrigger>
-                  <TabsTrigger value="Жидкости">Жидкости</TabsTrigger>
-                  <TabsTrigger value="Аксессуары">Аксессуары</TabsTrigger>
+                  <TabsTrigger value="all">{getText('catalog_tab_all', 'Все')}</TabsTrigger>
+                  <TabsTrigger value="Одноразки">{getText('catalog_tab_disposable', 'Одноразки')}</TabsTrigger>
+                  <TabsTrigger value="Жидкости">{getText('catalog_tab_liquids', 'Жидкости')}</TabsTrigger>
+                  <TabsTrigger value="Аксессуары">{getText('catalog_tab_accessories', 'Аксессуары')}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-3 block">Цена</label>
+              <label className="text-sm font-medium mb-3 block">{getText('catalog_filter_price', 'Цена')}</label>
               <Tabs value={priceRange} onValueChange={setPriceRange}>
                 <TabsList className="bg-card/50">
-                  <TabsTrigger value="all">Все</TabsTrigger>
-                  <TabsTrigger value="low">До 1000₽</TabsTrigger>
-                  <TabsTrigger value="mid">1000-3000₽</TabsTrigger>
-                  <TabsTrigger value="high">От 3000₽</TabsTrigger>
+                  <TabsTrigger value="all">{getText('catalog_price_all', 'Все')}</TabsTrigger>
+                  <TabsTrigger value="low">{getText('catalog_price_low', 'До 1000₽')}</TabsTrigger>
+                  <TabsTrigger value="mid">{getText('catalog_price_mid', '1000-3000₽')}</TabsTrigger>
+                  <TabsTrigger value="high">{getText('catalog_price_high', 'От 3000₽')}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -214,7 +216,7 @@ export default function Index() {
             <div className="text-center py-20">
               <Icon name="AlertCircle" size={48} className="mx-auto mb-4 text-destructive" />
               <p className="text-destructive mb-4">{error}</p>
-              <Button onClick={loadProducts}>Попробовать снова</Button>
+              <Button onClick={loadProducts}>{getText('error_retry_button', 'Попробовать снова')}</Button>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -235,7 +237,7 @@ export default function Index() {
                         />
                         {product.is_new && (
                           <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground text-xs">
-                            Новинка
+                            {getText('catalog_badge_new', 'Новинка')}
                           </Badge>
                         )}
                         {product.discount > 0 && (
@@ -269,7 +271,7 @@ export default function Index() {
           <div className="text-center mt-12">
             <Link to="/catalog">
               <Button size="lg" variant="outline" className="gap-2">
-                Смотреть весь каталог
+                {getText('catalog_view_all_button', 'Смотреть весь каталог')}
                 <Icon name="ArrowRight" size={20} />
               </Button>
             </Link>

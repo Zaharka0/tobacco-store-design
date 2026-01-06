@@ -202,10 +202,16 @@ export default function Admin() {
                 WhiteShishka Admin
               </span>
             </div>
-            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
-              <Icon name="Home" size={16} className="mr-2" />
-              Back to Site
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin/texts'}>
+                <Icon name="Type" size={16} className="mr-2" />
+                Тексты
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+                <Icon name="Home" size={16} className="mr-2" />
+                На сайт
+              </Button>
+            </div>
           </div>
         </div>
       </nav>

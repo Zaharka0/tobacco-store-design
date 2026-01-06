@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Get all site texts",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "site_name": {
+          "value": "string",
+          "section": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get navigation texts",
+      "method": "GET",
+      "path": "/?section=navigation",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "site_name": {
+          "value": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
