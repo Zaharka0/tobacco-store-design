@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useOnlineUsers } from '@/hooks/useOnlineUsers';
-import { useSiteContent } from '@/hooks/useSiteContent';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
 
@@ -30,7 +29,6 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const onlineUsers = useOnlineUsers();
-  const { getText } = useSiteContent();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -90,15 +88,16 @@ export default function Index() {
               </Link>
               <Link to="/" className="flex items-center gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {getText('site_name', 'Повязки для Волос')}
+                  WhiteShishka
                 </span>
               </Link>
             </div>
             <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="text-foreground font-medium">{getText('nav_home', 'Главная')}</Link>
-              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_catalog', 'Каталог')}</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_about', 'О нас')}</Link>
+              <Link to="/" className="text-foreground font-medium">Главная</Link>
+              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
               <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
+              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors">Акции</Link>
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
@@ -125,23 +124,26 @@ export default function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(139,92,246,0.1),transparent_50%)]" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
+            <Badge className="mb-4 px-4 py-1 text-sm bg-primary/20 text-primary border-primary/50">
+              18+
+            </Badge>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
-              {getText('hero_title', 'Стильные Повязки для Волос')}
+              Премиум Вейп-Магазин
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              {getText('hero_subtitle', 'Уникальные аксессуары ручной работы для создания неповторимого образа')}
+              Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/catalog">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                   <Icon name="Eye" size={20} className="mr-2" />
-                  {getText('hero_button_catalog', 'Смотреть каталог')}
+                  Смотреть каталог
                 </Button>
               </Link>
-              <Link to="/about">
+              <Link to="/promotions">
                 <Button size="lg" variant="outline" className="border-2">
-                  <Icon name="Info" size={20} className="mr-2" />
-                  {getText('hero_button_about', 'О нас')}
+                  <Icon name="Sparkles" size={20} className="mr-2" />
+                  Акции
                 </Button>
               </Link>
             </div>
@@ -153,10 +155,10 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { icon: 'Cigarette', title: getText('feature1_title', 'Одноразки'), desc: getText('feature1_description', 'Удобно и просто') },
-              { icon: 'Droplets', title: getText('feature2_title', 'Жидкости'), desc: getText('feature2_description', 'Все вкусы') },
-              { icon: 'Puzzle', title: getText('feature3_title', 'Аксессуары'), desc: getText('feature3_description', 'Для всех моделей') },
-            ].map((item: any, i: number) => (
+              { icon: 'Cigarette', title: 'Одноразки', desc: 'Удобно и просто' },
+              { icon: 'Droplets', title: 'Жидкости', desc: 'Все вкусы' },
+              { icon: 'Puzzle', title: 'Аксессуары', desc: 'Для всех моделей' },
+            ].map((item, i) => (
               <Card key={i} className="border-border/50 bg-card/80 backdrop-blur hover:border-primary/50 transition-all hover:scale-105 animate-scale-in" style={{ animationDelay: `${i * 100}ms` }}>
                 <CardContent className="p-6 text-center">
                   <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mx-auto mb-3">
@@ -174,8 +176,8 @@ export default function Index() {
       <section id="catalog" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">{getText('popular_title', 'Популярные товары')}</h2>
-            <p className="text-muted-foreground">Наши самые популярные повязки</p>
+            <h2 className="text-4xl font-bold mb-4">Каталог товаров</h2>
+            <p className="text-muted-foreground">Выберите категорию и фильтры для удобного поиска</p>
           </div>
 
           <div className="mb-8 space-y-6">
