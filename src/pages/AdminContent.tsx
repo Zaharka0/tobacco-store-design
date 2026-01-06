@@ -36,6 +36,8 @@ export default function AdminContent() {
   const [loading, setLoading] = useState(false);
   const [editingBlock, setEditingBlock] = useState<ContentBlock | null>(null);
   const [selectedPage, setSelectedPage] = useState<string>('home');
+  const [creatingBlock, setCreatingBlock] = useState(false);
+  const [newBlock, setNewBlock] = useState({ block_key: '', block_type: 'text', content: '' });
   const { toast } = useToast();
 
   useEffect(() => {
@@ -130,6 +132,50 @@ export default function AdminContent() {
     }
   };
 
+  const handleCreateBlock = async () => {
+    if (!newBlock.block_key || !newBlock.content) {
+      toast({
+        title: 'Ошибка',
+        description: 'Заполните все поля',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(CONTENT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page_name: selectedPage,
+          block_key: newBlock.block_key,
+          block_type: newBlock.block_type,
+          content: newBlock.content
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to create block');
+
+      toast({
+        title: 'Успешно',
+        description: 'Блок создан',
+      });
+
+      setCreatingBlock(false);
+      setNewBlock({ block_key: '', block_type: 'text', content: '' });
+      await loadContent();
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: error instanceof Error ? error.message : 'Failed to create',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const pageBlocks = contentBlocks.filter(b => b.page_name === selectedPage);
 
   return (
@@ -146,6 +192,12 @@ export default function AdminContent() {
               </span>
             </div>
             <div className="flex gap-2">
+              <Link to="/admin/theme">
+                <Button variant="outline" size="sm">
+                  <Icon name="Palette" size={16} className="mr-2" />
+                  Цвета
+                </Button>
+              </Link>
               <Link to="/admin">
                 <Button variant="outline" size="sm">
                   <Icon name="Package" size={16} className="mr-2" />
@@ -167,13 +219,69 @@ export default function AdminContent() {
           <p className="text-muted-foreground">Управляйте текстами и блоками на страницах сайта</p>
         </div>
 
-        <Tabs value={selectedPage} onValueChange={setSelectedPage} className="mb-8">
-          <TabsList className="grid w-full grid-cols-6">
-            {Object.entries(PAGE_NAMES).map(([key, label]) => (
-              <TabsTrigger key={key} value={key}>{label}</TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center justify-between mb-8">
+          <Tabs value={selectedPage} onValueChange={setSelectedPage} className="flex-1">
+            <TabsList className="grid w-full grid-cols-6">
+              {Object.entries(PAGE_NAMES).map(([key, label]) => (
+                <TabsTrigger key={key} value={key}>{label}</TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+          <Button onClick={() => setCreatingBlock(true)} className="ml-4">
+            <Icon name="Plus" size={16} className="mr-2" />
+            Добавить блок
+          </Button>
+        </div>
+
+        {creatingBlock && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Создание нового блока</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label>Ключ блока (англ.)</Label>
+                <Input
+                  value={newBlock.block_key}
+                  onChange={(e) => setNewBlock({ ...newBlock, block_key: e.target.value })}
+                  placeholder="например: hero_title"
+                />
+              </div>
+              <div>
+                <Label>Тип блока</Label>
+                <select
+                  className="w-full px-3 py-2 border border-border rounded-md bg-background"
+                  value={newBlock.block_type}
+                  onChange={(e) => setNewBlock({ ...newBlock, block_type: e.target.value })}
+                >
+                  <option value="text">Текст</option>
+                  <option value="json">JSON</option>
+                </select>
+              </div>
+              <div>
+                <Label>Контент</Label>
+                <Textarea
+                  value={newBlock.content}
+                  onChange={(e) => setNewBlock({ ...newBlock, content: e.target.value })}
+                  rows={5}
+                  placeholder="Введите содержимое блока"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleCreateBlock} disabled={loading}>
+                  <Icon name="Plus" size={16} className="mr-2" />
+                  Создать
+                </Button>
+                <Button variant="outline" onClick={() => {
+                  setCreatingBlock(false);
+                  setNewBlock({ block_key: '', block_type: 'text', content: '' });
+                }}>
+                  Отмена
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {editingBlock && (
           <Card className="mb-8">

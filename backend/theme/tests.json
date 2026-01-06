@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Get theme colors",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "primary": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

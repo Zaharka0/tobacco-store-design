@@ -28,7 +28,46 @@ def handler(event: dict, context) -> dict:
         conn = psycopg2.connect(dsn)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
-        if method == 'GET':
+        if method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            page_name = body.get('page_name')
+            block_key = body.get('block_key')
+            block_type = body.get('block_type', 'text')
+            content = body.get('content')
+            
+            if not page_name or not block_key:
+                raise Exception('page_name and block_key required')
+            
+            cursor.execute('SELECT MAX(display_order) FROM page_content WHERE page_name = %s', (page_name,))
+            result = cursor.fetchone()
+            next_order = (result['max'] or 0) + 1 if result else 1
+            
+            if isinstance(content, (dict, list)):
+                cursor.execute(
+                    'INSERT INTO page_content (page_name, block_key, block_type, content_json, display_order) VALUES (%s, %s, %s, %s, %s)',
+                    (page_name, block_key, block_type, json.dumps(content, ensure_ascii=False), next_order)
+                )
+            else:
+                cursor.execute(
+                    'INSERT INTO page_content (page_name, block_key, block_type, content_text, display_order) VALUES (%s, %s, %s, %s, %s)',
+                    (page_name, block_key, block_type, str(content), next_order)
+                )
+            
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({'success': True, 'message': 'Block created'}),
+                'isBase64Encoded': False
+            }
+        
+        elif method == 'GET':
             page_name = event.get('queryStringParameters', {}).get('page')
             
             if page_name:

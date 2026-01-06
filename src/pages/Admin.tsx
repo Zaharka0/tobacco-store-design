@@ -204,6 +204,12 @@ export default function Admin() {
               </span>
             </div>
             <div className="flex gap-2">
+              <Link to="/admin/theme">
+                <Button variant="outline" size="sm">
+                  <Icon name="Palette" size={16} className="mr-2" />
+                  Цвета
+                </Button>
+              </Link>
               <Link to="/admin/content">
                 <Button variant="outline" size="sm">
                   <Icon name="FileText" size={16} className="mr-2" />

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProductProvider } from "./contexts/ProductContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { useTheme } from "./hooks/useTheme";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -16,19 +17,20 @@ import Promotions from "./pages/Promotions";
 import FAQ from "./pages/FAQ";
 import Admin from "./pages/Admin";
 import AdminContent from "./pages/AdminContent";
+import AdminTheme from "./pages/AdminTheme";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <ProductProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
+function AppContent() {
+  useTheme();
+  
+  return (
+    <>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/about" element={<About />} />
@@ -38,10 +40,21 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="/admin/content" element={<ProtectedRoute><AdminContent /></ProtectedRoute>} />
+              <Route path="/admin/theme" element={<ProtectedRoute><AdminTheme /></ProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </BrowserRouter>
+      </BrowserRouter>
+    </>
+  );
+}
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <ProductProvider>
+        <TooltipProvider>
+          <AppContent />
         </TooltipProvider>
       </ProductProvider>
     </AuthProvider>
