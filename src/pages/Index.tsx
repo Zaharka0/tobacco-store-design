@@ -81,10 +81,10 @@ export default function Index() {
             <div className="flex items-center gap-2">
               <Link 
                 to="/login" 
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden"
                 title="Админ-панель"
               >
-                <Icon name="Cigarette" className="text-primary-foreground" size={20} />
+                <img src="https://cdn.poehali.dev/files/image.png" alt="Logo" className="w-full h-full object-cover" />
               </Link>
               <Link to="/" className="flex items-center gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -153,10 +153,9 @@ export default function Index() {
 
       <section className="py-16 bg-card/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
               { icon: 'Cigarette', title: 'Одноразки', desc: 'Удобно и просто' },
-              { icon: 'Package', title: 'Под-системы', desc: 'Широкий выбор' },
               { icon: 'Droplets', title: 'Жидкости', desc: 'Все вкусы' },
               { icon: 'Puzzle', title: 'Аксессуары', desc: 'Для всех моделей' },
             ].map((item, i) => (
@@ -185,10 +184,9 @@ export default function Index() {
             <div>
               <label className="text-sm font-medium mb-3 block">Категория</label>
               <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-                <TabsList className="grid w-full grid-cols-5 bg-card/50">
+                <TabsList className="grid w-full grid-cols-4 bg-card/50">
                   <TabsTrigger value="all">Все</TabsTrigger>
                   <TabsTrigger value="Одноразки">Одноразки</TabsTrigger>
-                  <TabsTrigger value="Под-системы">Под-системы</TabsTrigger>
                   <TabsTrigger value="Жидкости">Жидкости</TabsTrigger>
                   <TabsTrigger value="Аксессуары">Аксессуары</TabsTrigger>
                 </TabsList>

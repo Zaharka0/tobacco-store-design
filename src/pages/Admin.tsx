@@ -256,7 +256,6 @@ export default function Admin() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Одноразки">Одноразки</SelectItem>
-                        <SelectItem value="Под-системы">Под-системы</SelectItem>
                         <SelectItem value="Жидкости">Жидкости</SelectItem>
                         <SelectItem value="Аксессуары">Аксессуары</SelectItem>
                       </SelectContent>

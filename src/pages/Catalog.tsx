@@ -77,10 +77,10 @@ export default function Catalog() {
             <div className="flex items-center gap-2">
               <Link 
                 to="/login" 
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer"
+                className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden"
                 title="Админ-панель"
               >
-                <Icon name="Cigarette" className="text-primary-foreground" size={20} />
+                <img src="https://cdn.poehali.dev/files/image.png" alt="Logo" className="w-full h-full object-cover" />
               </Link>
               <Link to="/" className="flex items-center gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -137,7 +137,6 @@ export default function Catalog() {
                       <TabsList className="grid grid-cols-1 gap-2 h-auto bg-transparent">
                         <TabsTrigger value="all" className="justify-start">Все товары</TabsTrigger>
                         <TabsTrigger value="Одноразки" className="justify-start">Одноразки</TabsTrigger>
-                        <TabsTrigger value="Под-системы" className="justify-start">Под-системы</TabsTrigger>
                         <TabsTrigger value="Жидкости" className="justify-start">Жидкости</TabsTrigger>
                         <TabsTrigger value="Аксессуары" className="justify-start">Аксессуары</TabsTrigger>
                       </TabsList>
