@@ -96,6 +96,19 @@ export default function AdminTheme() {
     return `${parseInt(result[1], 16)} ${parseInt(result[2], 16)} ${parseInt(result[3], 16)}`;
   };
 
+  const applyPreviewColors = (previewColors: ThemeColors) => {
+    const root = document.documentElement;
+    Object.entries(previewColors).forEach(([key, value]) => {
+      root.style.setProperty(`--${key}`, value);
+    });
+  };
+
+  const handleColorChange = (key: string, value: string) => {
+    const newColors = { ...colors, [key]: value };
+    setColors(newColors);
+    applyPreviewColors(newColors);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
@@ -134,52 +147,115 @@ export default function AdminTheme() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Настройка цветов сайта</h1>
-          <p className="text-muted-foreground">Измените цветовую схему вашего магазина</p>
+          <p className="text-muted-foreground">Измените цвета и смотрите изменения в реальном времени</p>
         </div>
 
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Цветовая палитра</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Object.entries(colors).map(([key, value]) => (
-              <div key={key} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                <div>
-                  <Label className="font-semibold">{key}</Label>
-                  <p className="text-xs text-muted-foreground">{COLOR_DESCRIPTIONS[key] || 'Цвет'}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={rgbToHex(value)}
-                    onChange={(e) => setColors({ ...colors, [key]: hexToRgb(e.target.value) })}
-                    className="w-20 h-10"
-                  />
-                  <div 
-                    className="w-20 h-10 rounded border border-border"
-                    style={{ backgroundColor: `rgb(${value})` }}
-                  />
-                </div>
-                <Input
-                  type="text"
-                  value={value}
-                  onChange={(e) => setColors({ ...colors, [key]: e.target.value })}
-                  placeholder="R G B (например: 139 92 246)"
-                />
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>Цветовая палитра</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {Object.entries(colors).map(([key, value]) => (
+                  <div key={key} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <div>
+                      <Label className="font-semibold">{key}</Label>
+                      <p className="text-xs text-muted-foreground">{COLOR_DESCRIPTIONS[key] || 'Цвет'}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        type="color"
+                        value={rgbToHex(value)}
+                        onChange={(e) => handleColorChange(key, hexToRgb(e.target.value))}
+                        className="w-20 h-10"
+                      />
+                      <div 
+                        className="w-20 h-10 rounded border border-border"
+                        style={{ backgroundColor: `rgb(${value})` }}
+                      />
+                    </div>
+                    <Input
+                      type="text"
+                      value={value}
+                      onChange={(e) => handleColorChange(key, e.target.value)}
+                      placeholder="R G B (например: 139 92 246)"
+                    />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
 
-        <div className="flex gap-4">
-          <Button onClick={handleSave} disabled={loading} size="lg">
-            <Icon name="Save" size={16} className="mr-2" />
-            Сохранить изменения
-          </Button>
-          <Button variant="outline" onClick={loadTheme} disabled={loading} size="lg">
-            <Icon name="RotateCcw" size={16} className="mr-2" />
-            Сбросить
-          </Button>
+            <div className="flex gap-4">
+              <Button onClick={handleSave} disabled={loading} size="lg">
+                <Icon name="Save" size={16} className="mr-2" />
+                Сохранить изменения
+              </Button>
+              <Button variant="outline" onClick={() => { loadTheme(); window.location.reload(); }} disabled={loading} size="lg">
+                <Icon name="RotateCcw" size={16} className="mr-2" />
+                Сбросить
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <Card className="sticky top-24">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Icon name="Eye" size={20} />
+                  Превью изменений
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="p-4 rounded-lg border border-border bg-card">
+                    <h3 className="font-semibold text-foreground mb-2">Карточка товара</h3>
+                    <p className="text-sm text-muted-foreground mb-3">Пример описания товара с использованием текущих цветов</p>
+                    <Button className="w-full bg-primary text-primary-foreground">
+                      Купить сейчас
+                    </Button>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-border bg-background">
+                    <h4 className="text-foreground font-medium mb-2">Фон страницы</h4>
+                    <p className="text-muted-foreground text-sm">Основной фон сайта</p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <div className="flex-1 p-3 rounded-lg text-center" style={{ backgroundColor: `rgb(${colors.primary})`, color: `rgb(${colors['primary-foreground'] || '255 255 255'})` }}>
+                      Primary
+                    </div>
+                    <div className="flex-1 p-3 rounded-lg text-center" style={{ backgroundColor: `rgb(${colors.accent})`, color: `rgb(${colors.foreground || '0 0 0'})` }}>
+                      Accent
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-border bg-muted">
+                    <p className="text-muted-foreground text-sm">Приглушённый фон и текст</p>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <input 
+                      type="text" 
+                      placeholder="Поле ввода"
+                      className="px-3 py-2 rounded-lg border bg-input text-foreground"
+                      style={{ 
+                        backgroundColor: `rgb(${colors.input})`,
+                        borderColor: `rgb(${colors.border})`,
+                        color: `rgb(${colors.foreground})`
+                      }}
+                      readOnly
+                    />
+                  </div>
+
+                  <div className="text-xs text-muted-foreground mt-4 p-3 rounded-lg bg-muted/50">
+                    <Icon name="Info" size={14} className="inline mr-1" />
+                    Изменения применяются мгновенно. Не забудьте сохранить!
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
