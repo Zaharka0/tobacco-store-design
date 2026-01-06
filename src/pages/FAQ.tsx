@@ -90,7 +90,7 @@ export default function FAQ() {
                 <Icon name="Cigarette" className="text-primary-foreground" size={20} />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                VapeShop
+                WhiteShishka
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-6">
@@ -102,9 +102,14 @@ export default function FAQ() {
               <Link to="/faq" className="text-foreground font-medium">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Icon name="Phone" size={16} />
-                <span className="hidden sm:inline">+7 (999) 123-45-67</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2"
+                onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+              >
+                <Icon name="MessageCircle" size={16} />
+                <span className="hidden sm:inline">Написать в бот</span>
               </Button>
             </div>
           </div>
@@ -159,16 +164,23 @@ export default function FAQ() {
                   Не нашли ответ на свой вопрос?
                 </h2>
                 <p className="text-muted-foreground mb-6">
-                  Наша служба поддержки работает ежедневно с 9:00 до 21:00. Мы с радостью ответим на все ваши вопросы!
+                  Напишите в наш Telegram-бот @whiteshishka_bot - мы ответим на все ваши вопросы!
                 </p>
                 <div className="flex flex-wrap gap-3 justify-center">
-                  <Button className="gap-2">
-                    <Icon name="Phone" size={18} />
-                    +7 (999) 123-45-67
+                  <Button 
+                    className="gap-2"
+                    onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+                  >
+                    <Icon name="MessageCircle" size={18} />
+                    Написать в бот
                   </Button>
-                  <Button variant="outline" className="gap-2">
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+                  >
                     <Icon name="Send" size={18} />
-                    Написать в чат
+                    @whiteshishka_bot
                   </Button>
                   <Button variant="outline" className="gap-2">
                     <Icon name="Mail" size={18} />
@@ -184,7 +196,7 @@ export default function FAQ() {
       <footer className="border-t border-border/50 mt-20 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-muted-foreground">
-            <p>© 2024 VapeShop. Все права защищены.</p>
+            <p>© 2024 WhiteShishka. Все права защищены.</p>
           </div>
         </div>
       </footer>

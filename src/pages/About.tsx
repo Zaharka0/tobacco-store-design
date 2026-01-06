@@ -14,7 +14,7 @@ export default function About() {
                 <Icon name="Cigarette" className="text-primary-foreground" size={20} />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                VapeShop
+                WhiteShishka
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-6">
@@ -26,9 +26,14 @@ export default function About() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Icon name="Phone" size={16} />
-                <span className="hidden sm:inline">+7 (999) 123-45-67</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2"
+                onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+              >
+                <Icon name="MessageCircle" size={16} />
+                <span className="hidden sm:inline">Написать в бот</span>
               </Button>
             </div>
           </div>
@@ -38,7 +43,7 @@ export default function About() {
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            О магазине VapeShop
+            О магазине WhiteShishka
           </h1>
           <p className="text-xl text-muted-foreground mb-12">
             Ваш надежный партнер в мире вейпинга с 2020 года
@@ -148,7 +153,7 @@ export default function About() {
       <footer className="border-t border-border/50 mt-20 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-muted-foreground">
-            <p>© 2024 VapeShop. Все права защищены.</p>
+            <p>© 2024 WhiteShishka. Все права защищены.</p>
           </div>
         </div>
       </footer>

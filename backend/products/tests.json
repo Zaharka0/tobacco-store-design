@@ -1,0 +1,16 @@
+{
+  "tests": [
+    {
+      "name": "Получить все товары",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Получить товары по категории",
+      "method": "GET",
+      "path": "/?category=Одноразовые",
+      "expectedStatus": 200
+    }
+  ]
+}

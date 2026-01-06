@@ -1,26 +1,73 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
-import { useProducts } from '@/contexts/ProductContext';
 import { Link } from 'react-router-dom';
+import ProductDetailModal from '@/components/ProductDetailModal';
+
+const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image_url: string;
+  short_description: string;
+  full_description: string;
+  features: Record<string, string>;
+  in_stock: boolean;
+  is_new: boolean;
+  discount: number;
+}
 
 export default function Catalog() {
-  const { products } = useProducts();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedFlavor, setSelectedFlavor] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error('Failed to load products');
+      const data = await response.json();
+      setProducts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load products');
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProducts = products.filter(product => {
     if (selectedCategory !== 'all' && product.category !== selectedCategory) return false;
-    if (selectedFlavor !== 'all' && product.flavor !== selectedFlavor) return false;
     if (priceRange === 'low' && product.price > 1000) return false;
     if (priceRange === 'mid' && (product.price < 1000 || product.price > 3000)) return false;
     if (priceRange === 'high' && product.price < 3000) return false;
     return true;
   });
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
+  const calculateFinalPrice = (price: number, discount: number) => {
+    return discount > 0 ? price - (price * discount / 100) : price;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,7 +79,7 @@ export default function Catalog() {
                 <Icon name="Cigarette" className="text-primary-foreground" size={20} />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                VapeShop
+                WhiteShishka
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-6">
@@ -44,9 +91,14 @@ export default function Catalog() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Icon name="Phone" size={16} />
-                <span className="hidden sm:inline">+7 (999) 123-45-67</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2"
+                onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+              >
+                <Icon name="MessageCircle" size={16} />
+                <span className="hidden sm:inline">Написать в бот</span>
               </Button>
             </div>
           </div>
@@ -78,9 +130,10 @@ export default function Catalog() {
                     <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
                       <TabsList className="grid grid-cols-1 gap-2 h-auto bg-transparent">
                         <TabsTrigger value="all" className="justify-start">Все товары</TabsTrigger>
-                        <TabsTrigger value="pods" className="justify-start">Под-системы</TabsTrigger>
-                        <TabsTrigger value="liquids" className="justify-start">Жидкости</TabsTrigger>
-                        <TabsTrigger value="accessories" className="justify-start">Аксессуары</TabsTrigger>
+                        <TabsTrigger value="Одноразовые" className="justify-start">Одноразовые</TabsTrigger>
+                        <TabsTrigger value="Под-системы" className="justify-start">Под-системы</TabsTrigger>
+                        <TabsTrigger value="Жидкости" className="justify-start">Жидкости</TabsTrigger>
+                        <TabsTrigger value="Аксессуары" className="justify-start">Аксессуары</TabsTrigger>
                       </TabsList>
                     </Tabs>
                   </div>
@@ -96,20 +149,6 @@ export default function Catalog() {
                       </TabsList>
                     </Tabs>
                   </div>
-
-                  {selectedCategory === 'liquids' && (
-                    <div>
-                      <label className="text-sm font-medium mb-3 block">Вкус</label>
-                      <Tabs value={selectedFlavor} onValueChange={setSelectedFlavor}>
-                        <TabsList className="grid grid-cols-1 gap-2 h-auto bg-transparent">
-                          <TabsTrigger value="all" className="justify-start">Все вкусы</TabsTrigger>
-                          <TabsTrigger value="berry" className="justify-start">Ягодные</TabsTrigger>
-                          <TabsTrigger value="tropical" className="justify-start">Тропические</TabsTrigger>
-                          <TabsTrigger value="mint" className="justify-start">Мятные</TabsTrigger>
-                        </TabsList>
-                      </Tabs>
-                    </div>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -120,40 +159,95 @@ export default function Catalog() {
               <p className="text-muted-foreground">
                 Найдено товаров: <span className="font-semibold text-foreground">{filteredProducts.length}</span>
               </p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={loadProducts}
+                disabled={loading}
+              >
+                <Icon name="RefreshCw" size={16} className={loading ? 'animate-spin' : ''} />
+              </Button>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map(product => (
-                <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 border-border/50 overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="relative overflow-hidden bg-muted/50">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                      {product.badge && (
-                        <Badge className="absolute top-3 right-3 bg-accent text-accent-foreground">
-                          {product.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-primary">{product.price}₽</span>
-                        <Button size="sm" variant="outline" className="gap-1">
-                          <Icon name="Info" size={14} />
-                          Подробнее
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <Icon name="Loader2" className="animate-spin" size={48} />
+              </div>
+            ) : error ? (
+              <div className="text-center py-20">
+                <Icon name="AlertCircle" size={48} className="mx-auto mb-4 text-destructive" />
+                <p className="text-destructive mb-4">{error}</p>
+                <Button onClick={loadProducts}>Попробовать снова</Button>
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="text-center py-20">
+                <Icon name="Package" size={48} className="mx-auto mb-4 opacity-50" />
+                <p className="text-muted-foreground">Товары не найдены</p>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map(product => {
+                  const finalPrice = calculateFinalPrice(product.price, product.discount);
+                  return (
+                    <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 border-border/50 overflow-hidden">
+                      <CardContent className="p-0">
+                        <div className="relative overflow-hidden bg-muted/50">
+                          <img 
+                            src={product.image_url} 
+                            alt={product.name}
+                            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                          {product.is_new && (
+                            <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground">
+                              Новинка
+                            </Badge>
+                          )}
+                          {product.discount > 0 && (
+                            <Badge className="absolute top-3 right-3 bg-destructive text-destructive-foreground">
+                              -{product.discount}%
+                            </Badge>
+                          )}
+                          {!product.in_stock && (
+                            <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                              <Badge variant="secondary">Нет в наличии</Badge>
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                            {product.short_description}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              {product.discount > 0 && (
+                                <span className="text-sm text-muted-foreground line-through block">
+                                  {product.price}₽
+                                </span>
+                              )}
+                              <span className="text-2xl font-bold text-primary">
+                                {Math.round(finalPrice)}₽
+                              </span>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="gap-1"
+                              onClick={() => handleProductClick(product)}
+                            >
+                              <Icon name="Info" size={14} />
+                              Подробнее
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -161,10 +255,16 @@ export default function Catalog() {
       <footer className="border-t border-border/50 mt-20 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-muted-foreground">
-            <p>© 2024 VapeShop. Все права защищены.</p>
+            <p>© 2024 WhiteShishka. Все права защищены.</p>
           </div>
         </div>
       </footer>
+
+      <ProductDetailModal 
+        product={selectedProduct}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
     </div>
   );
 }
