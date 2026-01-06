@@ -334,7 +334,7 @@ export default function Index() {
       <footer className="border-t border-border/50 py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center text-muted-foreground">
-            <p>© 2024 WhiteShishka. Все права защищены.</p>
+            <p>© 2026 WhiteShishka. Все права защищены.</p>
           </div>
         </div>
       </footer>
