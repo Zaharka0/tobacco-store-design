@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "name": "Get all content",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "type"
+    },
+    {
+      "name": "Get content by page",
+      "method": "GET",
+      "path": "/?page=home",
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "type"
+    }
+  ]
+}

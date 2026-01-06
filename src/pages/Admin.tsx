@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
 
@@ -202,10 +203,18 @@ export default function Admin() {
                 WhiteShishka Admin
               </span>
             </div>
-            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
-              <Icon name="Home" size={16} className="mr-2" />
-              Back to Site
-            </Button>
+            <div className="flex gap-2">
+              <Link to="/admin/content">
+                <Button variant="outline" size="sm">
+                  <Icon name="FileText" size={16} className="mr-2" />
+                  Контент
+                </Button>
+              </Link>
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+                <Icon name="Home" size={16} className="mr-2" />
+                На сайт
+              </Button>
+            </div>
           </div>
         </div>
       </nav>

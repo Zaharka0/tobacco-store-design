@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useOnlineUsers } from '@/hooks/useOnlineUsers';
+import { usePageContent } from '@/hooks/usePageContent';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
 
@@ -29,6 +30,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const onlineUsers = useOnlineUsers();
+  const { getText, getJson } = usePageContent('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -125,13 +127,13 @@ export default function Index() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <Badge className="mb-4 px-4 py-1 text-sm bg-primary/20 text-primary border-primary/50">
-              18+
+              {getText('hero_badge', '18+')}
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
-              Премиум Вейп-Магазин
+              {getText('hero_title', 'Премиум Вейп-Магазин')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей
+              {getText('hero_subtitle', 'Широкий выбор под систем, жидкостей и аксессуаров от проверенных производителей')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/catalog">
@@ -154,11 +156,11 @@ export default function Index() {
       <section className="py-16 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
+            {(getJson('categories', { items: [
               { icon: 'Cigarette', title: 'Одноразки', desc: 'Удобно и просто' },
               { icon: 'Droplets', title: 'Жидкости', desc: 'Все вкусы' },
               { icon: 'Puzzle', title: 'Аксессуары', desc: 'Для всех моделей' },
-            ].map((item, i) => (
+            ]}).items || []).map((item: any, i: number) => (
               <Card key={i} className="border-border/50 bg-card/80 backdrop-blur hover:border-primary/50 transition-all hover:scale-105 animate-scale-in" style={{ animationDelay: `${i * 100}ms` }}>
                 <CardContent className="p-6 text-center">
                   <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mx-auto mb-3">
@@ -176,8 +178,8 @@ export default function Index() {
       <section id="catalog" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Каталог товаров</h2>
-            <p className="text-muted-foreground">Выберите категорию и фильтры для удобного поиска</p>
+            <h2 className="text-4xl font-bold mb-4">{getText('catalog_title', 'Каталог товаров')}</h2>
+            <p className="text-muted-foreground">{getText('catalog_subtitle', 'Выберите категорию и фильтры для удобного поиска')}</p>
           </div>
 
           <div className="mb-8 space-y-6">
