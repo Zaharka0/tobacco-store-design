@@ -16,6 +16,7 @@ import Promotions from "./pages/Promotions";
 import FAQ from "./pages/FAQ";
 import Admin from "./pages/Admin";
 import AdminTexts from "./pages/AdminTexts";
+import AdminBot from "./pages/AdminBot";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="/admin/texts" element={<ProtectedRoute><AdminTexts /></ProtectedRoute>} />
+              <Route path="/admin/bot" element={<ProtectedRoute><AdminBot /></ProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

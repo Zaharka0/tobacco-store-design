@@ -1,0 +1,15 @@
+{
+  "tests": [
+    {
+      "name": "Get bot settings and messages",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "settings": "array",
+        "messages": "array"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
