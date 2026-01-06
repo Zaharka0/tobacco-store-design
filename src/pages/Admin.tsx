@@ -20,34 +20,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: 'pods' | 'liquids' | 'accessories';
-  flavor?: string;
-  image: string;
-  badge?: string;
-}
-
-const initialProducts: Product[] = [
-  { id: 1, name: 'JUUL Pod System', price: 3500, category: 'pods', image: '/placeholder.svg', badge: 'ХИТ' },
-  { id: 2, name: 'SMOK Nord 4', price: 2800, category: 'pods', image: '/placeholder.svg' },
-  { id: 3, name: 'Vaporesso XROS 3', price: 2200, category: 'pods', image: '/placeholder.svg', badge: 'НОВИНКА' },
-  { id: 4, name: 'Жидкость Ягодный Микс', price: 450, category: 'liquids', flavor: 'berry', image: '/placeholder.svg' },
-  { id: 5, name: 'Жидкость Тропик', price: 500, category: 'liquids', flavor: 'tropical', image: '/placeholder.svg', badge: 'ТОП' },
-  { id: 6, name: 'Жидкость Мята', price: 420, category: 'liquids', flavor: 'mint', image: '/placeholder.svg' },
-  { id: 7, name: 'USB-C Кабель', price: 350, category: 'accessories', image: '/placeholder.svg' },
-  { id: 8, name: 'Сменные картриджи', price: 800, category: 'accessories', image: '/placeholder.svg' },
-];
+import { useProducts, type Product } from '@/contexts/ProductContext';
 
 export default function Admin() {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [onlineUsers, setOnlineUsers] = useState(0);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [newProduct, setNewProduct] = useState<Partial<Product>>({
+  const [newProduct, setNewProduct] = useState<Omit<Product, 'id'>>({
     name: '',
     price: 0,
     category: 'pods',
@@ -63,29 +43,20 @@ export default function Admin() {
   }, []);
 
   const handleAddProduct = () => {
-    const product: Product = {
-      id: products.length + 1,
-      name: newProduct.name || '',
-      price: newProduct.price || 0,
-      category: newProduct.category as 'pods' | 'liquids' | 'accessories',
-      flavor: newProduct.flavor,
-      image: newProduct.image || '/placeholder.svg',
-      badge: newProduct.badge,
-    };
-    setProducts([...products, product]);
+    addProduct(newProduct);
     setNewProduct({ name: '', price: 0, category: 'pods', image: '/placeholder.svg' });
     setIsAddDialogOpen(false);
   };
 
   const handleEditProduct = () => {
     if (editingProduct) {
-      setProducts(products.map(p => p.id === editingProduct.id ? editingProduct : p));
+      updateProduct(editingProduct);
       setEditingProduct(null);
     }
   };
 
   const handleDeleteProduct = (id: number) => {
-    setProducts(products.filter(p => p.id !== id));
+    deleteProduct(id);
   };
 
   const stats = [

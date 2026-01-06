@@ -5,29 +5,10 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: 'pods' | 'liquids' | 'accessories';
-  flavor?: string;
-  image: string;
-  badge?: string;
-}
-
-const products: Product[] = [
-  { id: 1, name: 'JUUL Pod System', price: 3500, category: 'pods', image: '/placeholder.svg', badge: 'ХИТ' },
-  { id: 2, name: 'SMOK Nord 4', price: 2800, category: 'pods', image: '/placeholder.svg' },
-  { id: 3, name: 'Vaporesso XROS 3', price: 2200, category: 'pods', image: '/placeholder.svg', badge: 'НОВИНКА' },
-  { id: 4, name: 'Жидкость Ягодный Микс', price: 450, category: 'liquids', flavor: 'berry', image: '/placeholder.svg' },
-  { id: 5, name: 'Жидкость Тропик', price: 500, category: 'liquids', flavor: 'tropical', image: '/placeholder.svg', badge: 'ТОП' },
-  { id: 6, name: 'Жидкость Мята', price: 420, category: 'liquids', flavor: 'mint', image: '/placeholder.svg' },
-  { id: 7, name: 'USB-C Кабель', price: 350, category: 'accessories', image: '/placeholder.svg' },
-  { id: 8, name: 'Сменные картриджи', price: 800, category: 'accessories', image: '/placeholder.svg' },
-];
+import { useProducts } from '@/contexts/ProductContext';
 
 export default function Index() {
+  const { products } = useProducts();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFlavor, setSelectedFlavor] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
