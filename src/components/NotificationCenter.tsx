@@ -80,7 +80,7 @@ export default function NotificationCenter() {
           )}
         </div>
         <div className="max-h-[400px] overflow-y-auto">
-          {notifications.length === 0 ? (
+          {!notifications || notifications.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
               <Icon name="BellOff" size={32} className="mx-auto mb-2 opacity-50" />
               <p>Нет уведомлений</p>
@@ -121,7 +121,7 @@ export default function NotificationCenter() {
             </div>
           )}
         </div>
-        {notifications.length > 0 && (
+        {notifications && notifications.length > 0 && (
           <div className="p-2 border-t">
             <Button 
               variant="ghost" 
