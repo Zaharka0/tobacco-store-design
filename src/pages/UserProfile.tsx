@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import CartDrawer from '@/components/CartDrawer';
 import funcUrls from '../../backend/func2url.json';
 
 interface UserOrder {
@@ -70,19 +71,22 @@ export default function UserProfile() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Icon name="Leaf" className="text-white" size={24} />
+              <div className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+                <img src="https://cdn.poehali.dev/files/photo_2026-01-07_19-49-14.jpg" alt="Logo" className="w-full h-full object-cover" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 WhiteShishka
               </span>
             </Link>
-            <Link to="/">
-              <Button variant="outline" size="sm">
-                <Icon name="Home" size={16} className="mr-2" />
-                На главную
-              </Button>
-            </Link>
+            <div className="flex items-center gap-3">
+              <CartDrawer />
+              <Link to="/">
+                <Button variant="outline" size="sm">
+                  <Icon name="Home" size={16} className="mr-2" />
+                  На главную
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -231,7 +235,7 @@ export default function UserProfile() {
 
       <footer className="border-t border-border/50 py-8 bg-background/80">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 WhiteShishka. Все права защищены.</p>
+          <p>© 2026 WhiteShishka. Все права защищены.</p>
         </div>
       </footer>
     </div>

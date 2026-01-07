@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
+import CartDrawer from '@/components/CartDrawer';
 
 export default function About() {
   return (
@@ -10,8 +11,8 @@ export default function About() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Icon name="Cigarette" className="text-primary-foreground" size={20} />
+              <div className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+                <img src="https://cdn.poehali.dev/files/photo_2026-01-07_19-49-14.jpg" alt="Logo" className="w-full h-full object-cover" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 WhiteShishka
@@ -26,6 +27,17 @@ export default function About() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
+              <CartDrawer />
+              <Link to="/profile">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="gap-2"
+                >
+                  <Icon name="User" size={16} />
+                  <span className="hidden sm:inline">Мои заказы</span>
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -49,35 +61,7 @@ export default function About() {
             Ваш надежный партнер в мире вейпинга с 2020 года
           </p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <Card className="border-border/50 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Icon name="Award" size={32} className="text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2">4+ года</h3>
-                <p className="text-muted-foreground">на рынке вейпинга</p>
-              </CardContent>
-            </Card>
-            <Card className="border-border/50 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
-                  <Icon name="Users" size={32} className="text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2">15000+</h3>
-                <p className="text-muted-foreground">довольных клиентов</p>
-              </CardContent>
-            </Card>
-            <Card className="border-border/50 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Icon name="Package" size={32} className="text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2">500+</h3>
-                <p className="text-muted-foreground">товаров в наличии</p>
-              </CardContent>
-            </Card>
-          </div>
+
 
           <div className="prose prose-lg max-w-none space-y-8">
             <Card className="border-border/50">
@@ -87,9 +71,7 @@ export default function About() {
                   Наша миссия
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Мы создаем комфортное пространство для любителей вейпинга, предлагая только качественную продукцию 
-                  от проверенных производителей. Наша цель — помочь каждому клиенту найти идеальное устройство 
-                  и вкус, который будет радовать каждый день.
+                  Мы создаем комфортное пространство для любителей вейпинга, предлагая только качественную продукцию от проверенных производителей по сочной цене ниже чем у других шопов. Наша цель — помочь каждому клиенту найти идеальное устройство и вкус, который будет радовать каждый день.
                 </p>
               </CardContent>
             </Card>
@@ -138,7 +120,7 @@ export default function About() {
                   <Button className="gap-2">@whiteshishka_bot</Button>
                   <Button variant="outline" className="gap-2">
                     <Icon name="Mail" size={18} />
-                    info@vapeshop.ru
+                    info@whiteshishkakrd.ru
                   </Button>
                 </div>
               </CardContent>

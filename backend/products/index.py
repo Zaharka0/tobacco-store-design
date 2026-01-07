@@ -98,7 +98,8 @@ def handler(event: dict, context) -> dict:
         elif method == 'PUT':
             # Обновить товар
             data = json.loads(event.get('body', '{}'))
-            product_id = data.get('id')
+            params = event.get('queryStringParameters') or {}
+            product_id = params.get('id') or data.get('id')
             
             if not product_id:
                 return {

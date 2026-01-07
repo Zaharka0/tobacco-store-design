@@ -373,7 +373,7 @@ def handler(event: dict, context) -> dict:
                     'isBase64Encoded': False
                 }
             
-            cursor.execute("UPDATE cart_items SET quantity = 0 WHERE id = %s", (item_id,))
+            cursor.execute("DELETE FROM cart_items WHERE id = %s", (item_id,))
             conn.commit()
             cursor.close()
             conn.close()

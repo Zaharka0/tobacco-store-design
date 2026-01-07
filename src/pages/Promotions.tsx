@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
+import CartDrawer from '@/components/CartDrawer';
 
 export default function Promotions() {
   const promotions = [
@@ -50,8 +51,8 @@ export default function Promotions() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Icon name="Cigarette" className="text-primary-foreground" size={20} />
+              <div className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+                <img src="https://cdn.poehali.dev/files/photo_2026-01-07_19-49-14.jpg" alt="Logo" className="w-full h-full object-cover" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 WhiteShishka
@@ -66,6 +67,7 @@ export default function Promotions() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
+              <CartDrawer />
               <Button 
                 variant="outline" 
                 size="sm" 
