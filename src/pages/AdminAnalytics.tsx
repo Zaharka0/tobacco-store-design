@@ -192,9 +192,9 @@ export default function AdminAnalytics() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold">{analytics.views.total}</div>
+                      <div className="text-3xl font-bold">{analytics.views?.total || 0}</div>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Уникальных: {analytics.views.unique}
+                        Уникальных: {analytics.views?.unique || 0}
                       </p>
                     </CardContent>
                   </Card>
@@ -206,7 +206,7 @@ export default function AdminAnalytics() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold">{analytics.views.today}</div>
+                      <div className="text-3xl font-bold">{analytics.views?.today || 0}</div>
                     </CardContent>
                   </Card>
 
@@ -217,7 +217,7 @@ export default function AdminAnalytics() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold">{analytics.views.week}</div>
+                      <div className="text-3xl font-bold">{analytics.views?.week || 0}</div>
                     </CardContent>
                   </Card>
 
@@ -228,9 +228,9 @@ export default function AdminAnalytics() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-3xl font-bold">{analytics.orders.revenue.toLocaleString()} ₽</div>
+                      <div className="text-3xl font-bold">{(analytics.orders?.revenue || 0).toLocaleString()} ₽</div>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Заказов: {analytics.orders.completed}
+                        Заказов: {analytics.orders?.completed || 0}
                       </p>
                     </CardContent>
                   </Card>
@@ -261,15 +261,15 @@ export default function AdminAnalytics() {
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <span className="text-sm">Всего заказов</span>
-                          <span className="font-bold">{analytics.orders.total}</span>
+                          <span className="font-bold">{analytics.orders?.total || 0}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm">Новые</span>
-                          <Badge className="bg-blue-500">{analytics.orders.new}</Badge>
+                          <Badge className="bg-blue-500">{analytics.orders?.new || 0}</Badge>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm">Выполнено</span>
-                          <Badge className="bg-green-500">{analytics.orders.completed}</Badge>
+                          <Badge className="bg-green-500">{analytics.orders?.completed || 0}</Badge>
                         </div>
                       </div>
                     </CardContent>
