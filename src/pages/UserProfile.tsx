@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
 import funcUrls from '../../backend/func2url.json';
 
 interface UserOrder {
@@ -67,7 +66,26 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background/95 to-accent/5">
-      <Navbar />
+      <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                <Icon name="Leaf" className="text-white" size={24} />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                WhiteShishka
+              </span>
+            </Link>
+            <Link to="/">
+              <Button variant="outline" size="sm">
+                <Icon name="Home" size={16} className="mr-2" />
+                На главную
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </nav>
       
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -211,7 +229,11 @@ export default function UserProfile() {
         </div>
       </main>
 
-      <Footer />
+      <footer className="border-t border-border/50 py-8 bg-background/80">
+        <div className="container mx-auto px-4 text-center text-muted-foreground">
+          <p>© 2024 WhiteShishka. Все права защищены.</p>
+        </div>
+      </footer>
     </div>
   );
 }
