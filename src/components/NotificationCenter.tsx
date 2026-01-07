@@ -32,7 +32,7 @@ export default function NotificationCenter() {
 
   const loadNotifications = async () => {
     try {
-      const res = await fetch(`${apiUrl}/notifications`);
+      const res = await fetch(`${apiUrl}?action=notifications`);
       const data = await res.json();
       setNotifications(data.notifications);
     } catch (error) {
@@ -42,7 +42,7 @@ export default function NotificationCenter() {
 
   const markAsRead = async (notifId: number) => {
     try {
-      await fetch(`${apiUrl}/notification-read`, {
+      await fetch(`${apiUrl}?action=notification-read`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: notifId })

@@ -62,15 +62,15 @@ export default function AdminAnalytics() {
     setLoading(true);
     try {
       if (activeTab === 'stats') {
-        const res = await fetch(`${apiUrl}/analytics-stats`);
+        const res = await fetch(`${apiUrl}?action=analytics-stats`);
         const data = await res.json();
         setAnalytics(data);
       } else if (activeTab === 'orders') {
-        const res = await fetch(`${apiUrl}/orders`);
+        const res = await fetch(`${apiUrl}?action=orders`);
         const data = await res.json();
         setOrders(data.orders);
       } else if (activeTab === 'notifications') {
-        const res = await fetch(`${apiUrl}/notifications`);
+        const res = await fetch(`${apiUrl}?action=notifications`);
         const data = await res.json();
         setNotifications(data.notifications);
       }
@@ -82,7 +82,7 @@ export default function AdminAnalytics() {
 
   const updateOrderStatus = async (orderId: number, newStatus: string) => {
     try {
-      await fetch(`${apiUrl}/order-status`, {
+      await fetch(`${apiUrl}?action=order-status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: orderId, status: newStatus })
@@ -95,7 +95,7 @@ export default function AdminAnalytics() {
 
   const markNotificationRead = async (notifId: number) => {
     try {
-      await fetch(`${apiUrl}/notification-read`, {
+      await fetch(`${apiUrl}?action=notification-read`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: notifId })

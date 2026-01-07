@@ -7,8 +7,9 @@ def handler(event: dict, context) -> dict:
     """API для управления контентом сайта, аналитикой и заказами"""
     
     method = event.get('httpMethod', 'GET')
-    path_params = event.get('pathParams', {})
-    action = path_params.get('action', 'content')
+    query_params = event.get('queryStringParameters', {}) or {}
+    path_params = event.get('pathParams', {}) or {}
+    action = query_params.get('action') or path_params.get('action', 'content')
     
     if method == 'OPTIONS':
         return {

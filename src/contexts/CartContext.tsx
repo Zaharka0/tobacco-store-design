@@ -56,7 +56,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('cart_phone', phone);
     }
 
-    const res = await fetch(`${apiUrl}/cart`, {
+    const res = await fetch(`${apiUrl}?action=cart`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_phone: phone, session_id: Date.now().toString() })
@@ -73,7 +73,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!currentCartId) return;
 
     try {
-      const res = await fetch(`${apiUrl}/cart-items?cart_id=${currentCartId}`);
+      const res = await fetch(`${apiUrl}?action=cart-items&cart_id=${currentCartId}`);
       const data = await res.json();
       setItems(data.items);
       setTotal(data.total);
@@ -86,7 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const currentCartId = await ensureCart();
       
-      await fetch(`${apiUrl}/cart-item`, {
+      await fetch(`${apiUrl}?action=cart-item`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -107,7 +107,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const removeFromCart = async (itemId: number) => {
     try {
-      await fetch(`${apiUrl}/cart-item-remove?item_id=${itemId}`, {
+      await fetch(`${apiUrl}?action=cart-item-remove&item_id=${itemId}`, {
         method: 'DELETE'
       });
       
