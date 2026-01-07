@@ -286,7 +286,7 @@ export default function AdminAnalytics() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {orders.map((order) => (
+                    {orders?.map((order) => (
                       <div
                         key={order.id}
                         className="p-4 border rounded-lg hover:bg-accent/5 transition-colors"
@@ -370,7 +370,7 @@ export default function AdminAnalytics() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {notifications.map((notif) => (
+                    {notifications?.map((notif) => (
                       <div
                         key={notif.id}
                         className={`p-4 border rounded-lg ${!notif.is_read ? 'bg-blue-50 dark:bg-blue-950/20' : ''}`}
