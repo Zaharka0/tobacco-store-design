@@ -168,7 +168,7 @@ export default function AdminAnalytics() {
           >
             <Icon name="Bell" size={16} className="mr-2" />
             Уведомления
-            {notifications.filter(n => !n.is_read).length > 0 && (
+            {notifications?.filter(n => !n.is_read).length > 0 && (
               <Badge variant="destructive" className="ml-2">
                 {notifications.filter(n => !n.is_read).length}
               </Badge>
@@ -243,7 +243,7 @@ export default function AdminAnalytics() {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
-                        {analytics.top_pages.map((page, idx) => (
+                        {analytics.top_pages?.map((page, idx) => (
                           <div key={idx} className="flex items-center justify-between">
                             <span className="text-sm text-muted-foreground">{page.page}</span>
                             <Badge variant="secondary">{page.views}</Badge>
