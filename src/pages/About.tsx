@@ -58,7 +58,7 @@ export default function About() {
             О магазине WhiteShishka
           </h1>
           <p className="text-xl text-muted-foreground mb-12">
-            Ваш надежный партнер в мире вейпинга с 2020 года
+            Ваш надежный партнер в мире вейпинга с 2025 года
           </p>
 
 
@@ -93,15 +93,7 @@ export default function About() {
                   </li>
                   <li className="flex items-start gap-3">
                     <Icon name="Check" className="text-primary mt-1 flex-shrink-0" size={20} />
-                    <span className="text-muted-foreground">Быстрая доставка по всей России</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Icon name="Check" className="text-primary mt-1 flex-shrink-0" size={20} />
-                    <span className="text-muted-foreground">Регулярные акции и программа лояльности</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Icon name="Check" className="text-primary mt-1 flex-shrink-0" size={20} />
-                    <span className="text-muted-foreground">Удобные способы оплаты и возврата</span>
+                    <span className="text-muted-foreground">Есть 2 вида доставки обычная и экспресс</span>
                   </li>
                 </ul>
               </CardContent>

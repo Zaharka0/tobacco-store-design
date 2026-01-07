@@ -1,49 +1,43 @@
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import CartDrawer from '@/components/CartDrawer';
+import funcUrls from '../../backend/func2url.json';
+
+interface Promotion {
+  id: number;
+  title: string;
+  description: string;
+  discount: string;
+  valid_until: string;
+  image_url: string;
+  is_active: boolean;
+}
 
 export default function Promotions() {
-  const promotions = [
-    {
-      id: 1,
-      title: 'Скидка 20% на все под-системы',
-      description: 'Успей купить новейшие устройства со скидкой! Акция действует до конца месяца.',
-      discount: '-20%',
-      validUntil: '31 января',
-      image: '/placeholder.svg',
-      type: 'sale'
-    },
-    {
-      id: 2,
-      title: 'Жидкость в подарок',
-      description: 'При покупке устройства от 3000₽ получите жидкость любого вкуса в подарок!',
-      discount: 'Подарок',
-      validUntil: '15 февраля',
-      image: '/placeholder.svg',
-      type: 'gift'
-    },
-    {
-      id: 3,
-      title: 'Новинки месяца -15%',
-      description: 'Специальная цена на последние новинки от ведущих производителей.',
-      discount: '-15%',
-      validUntil: '7 февраля',
-      image: '/placeholder.svg',
-      type: 'new'
-    },
-    {
-      id: 4,
-      title: 'Набор для новичков',
-      description: 'Устройство + 3 жидкости + зарядка = полный комплект со скидкой 25%!',
-      discount: '-25%',
-      validUntil: '28 февраля',
-      image: '/placeholder.svg',
-      type: 'bundle'
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = funcUrls['site-content'];
+
+  useEffect(() => {
+    loadPromotions();
+  }, []);
+
+  const loadPromotions = async () => {
+    try {
+      const res = await fetch(`${API_URL}?action=promotions`);
+      if (!res.ok) throw new Error('Failed to load');
+      const data = await res.json();
+      setPromotions(data.filter((p: Promotion) => p.is_active));
+    } catch (error) {
+      console.error('Error loading promotions:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -93,32 +87,17 @@ export default function Promotions() {
             </p>
           </div>
 
-          <Card className="border-border/50 mb-12 overflow-hidden">
-            <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-8 text-center">
-              <div className="max-w-2xl mx-auto">
-                <Badge className="mb-4 text-base px-4 py-2">
-                  <Icon name="Sparkles" size={16} className="mr-2" />
-                  Программа лояльности
-                </Badge>
-                <h2 className="text-3xl font-bold mb-4">Копите бонусы и экономьте!</h2>
-                <p className="text-muted-foreground text-lg mb-6">
-                  Получайте 5% от каждой покупки на бонусный счет и оплачивайте до 30% следующего заказа бонусами
-                </p>
-                <Button size="lg" className="gap-2">
-                  <Icon name="Gift" size={18} />
-                  Узнать подробнее
-                </Button>
-              </div>
-            </div>
-          </Card>
-
           <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {promotions.map(promo => (
+            {loading ? (
+              <p className="col-span-2 text-center">Загрузка...</p>
+            ) : promotions.length === 0 ? (
+              <p className="col-span-2 text-center text-muted-foreground">Нет активных акций</p>
+            ) : promotions.map(promo => (
               <Card key={promo.id} className="border-border/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
                 <CardContent className="p-0">
                   <div className="relative overflow-hidden bg-muted/50 h-48">
                     <img 
-                      src={promo.image} 
+                      src={promo.image_url} 
                       alt={promo.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
@@ -131,7 +110,7 @@ export default function Promotions() {
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-3">
                       <Icon name="Clock" size={16} className="text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">до {promo.validUntil}</span>
+                      <span className="text-sm text-muted-foreground">до {promo.valid_until}</span>
                     </div>
                     <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                       {promo.title}
@@ -146,7 +125,7 @@ export default function Promotions() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )))}
           </div>
 
           <Card className="border-border/50 bg-gradient-to-br from-primary/5 to-accent/5">

@@ -405,6 +405,144 @@ def handler(event: dict, context) -> dict:
                 'isBase64Encoded': False
             }
         
+        elif action == 'promotions' and method == 'GET':
+            query_params = event.get('queryStringParameters', {})
+            promo_id = query_params.get('id') if query_params else None
+            
+            if promo_id:
+                cursor.execute('SELECT * FROM promotions WHERE id = %s', (promo_id,))
+                promo = cursor.fetchone()
+                
+                if not promo:
+                    return {
+                        'statusCode': 404,
+                        'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                        'body': json.dumps({'error': 'Акция не найдена'}),
+                        'isBase64Encoded': False
+                    }
+                
+                return {
+                    'statusCode': 200,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps(dict(promo), ensure_ascii=False, default=str),
+                    'isBase64Encoded': False
+                }
+            else:
+                cursor.execute('SELECT * FROM promotions ORDER BY created_at DESC')
+                promos = cursor.fetchall()
+                
+                return {
+                    'statusCode': 200,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps([dict(p) for p in promos], ensure_ascii=False, default=str),
+                    'isBase64Encoded': False
+                }
+        
+        elif action == 'promotions' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            
+            cursor.execute('''
+                INSERT INTO promotions 
+                (title, description, discount, image_url, valid_until, is_active)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                RETURNING *
+            ''', (
+                body['title'],
+                body.get('description', ''),
+                body.get('discount', ''),
+                body.get('image_url', '/placeholder.svg'),
+                body.get('valid_until', ''),
+                body.get('is_active', True)
+            ))
+            
+            promo = cursor.fetchone()
+            conn.commit()
+            
+            return {
+                'statusCode': 201,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps(dict(promo), ensure_ascii=False, default=str),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'promotions' and method == 'PUT':
+            body = json.loads(event.get('body', '{}'))
+            query_params = event.get('queryStringParameters', {})
+            promo_id = query_params.get('id') if query_params else body.get('id')
+            
+            if not promo_id:
+                return {
+                    'statusCode': 400,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Не указан ID акции'}),
+                    'isBase64Encoded': False
+                }
+            
+            cursor.execute('''
+                UPDATE promotions 
+                SET title = %s, description = %s, discount = %s, image_url = %s, 
+                    valid_until = %s, is_active = %s, updated_at = CURRENT_TIMESTAMP
+                WHERE id = %s
+                RETURNING *
+            ''', (
+                body['title'],
+                body.get('description', ''),
+                body.get('discount', ''),
+                body.get('image_url', '/placeholder.svg'),
+                body.get('valid_until', ''),
+                body.get('is_active', True),
+                promo_id
+            ))
+            
+            promo = cursor.fetchone()
+            conn.commit()
+            
+            if not promo:
+                return {
+                    'statusCode': 404,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Акция не найдена'}),
+                    'isBase64Encoded': False
+                }
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps(dict(promo), ensure_ascii=False, default=str),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'promotions' and method == 'DELETE':
+            query_params = event.get('queryStringParameters', {})
+            promo_id = query_params.get('id') if query_params else None
+            
+            if not promo_id:
+                return {
+                    'statusCode': 400,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Не указан ID акции'}),
+                    'isBase64Encoded': False
+                }
+            
+            cursor.execute('DELETE FROM promotions WHERE id = %s RETURNING id', (promo_id,))
+            deleted = cursor.fetchone()
+            conn.commit()
+            
+            if not deleted:
+                return {
+                    'statusCode': 404,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Акция не найдена'}),
+                    'isBase64Encoded': False
+                }
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'message': 'Акция удалена'}),
+                'isBase64Encoded': False
+            }
+        
         elif method == 'GET':
             section = event.get('queryStringParameters', {}).get('section') if event.get('queryStringParameters') else None
             

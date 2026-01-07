@@ -45,7 +45,7 @@ export default function Delivery() {
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Доставка и оплата
+            Доставка
           </h1>
           <p className="text-xl text-muted-foreground mb-12">
             Быстро, удобно и надежно доставим ваш заказ
@@ -57,18 +57,18 @@ export default function Delivery() {
                 <div className="w-14 h-14 mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <Icon name="Truck" size={28} className="text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Курьерская доставка</h3>
+                <h3 className="text-xl font-bold mb-3">Обычная доставка</h3>
                 <p className="text-muted-foreground mb-4">
-                  Доставим заказ в удобное для вас время. Бесплатно при заказе от 3000₽.
+                  Доставим заказ в согласованное для вас время.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Срок доставки:</span>
-                    <span className="font-semibold">1-2 дня</span>
+                    <span className="font-semibold">на следующий день с момента заказа</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Стоимость:</span>
-                    <span className="font-semibold">от 300₽</span>
+                    <span className="font-semibold">от 150р</span>
                   </div>
                 </div>
               </CardContent>
@@ -81,7 +81,7 @@ export default function Delivery() {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Самовывоз</h3>
                 <p className="text-muted-foreground mb-4">
-                  Заберите заказ из нашего пункта выдачи в удобное время. Всегда бесплатно!
+                  Заберите заказ из нашего пункта выдачи в согласованное время.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -91,28 +91,6 @@ export default function Delivery() {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Стоимость:</span>
                     <span className="font-semibold text-accent">Бесплатно</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-border/50 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Icon name="Package" size={28} className="text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Почта России</h3>
-                <p className="text-muted-foreground mb-4">
-                  Доставка в любую точку России через почтовые отделения.
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Срок доставки:</span>
-                    <span className="font-semibold">5-14 дней</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Стоимость:</span>
-                    <span className="font-semibold">от 250₽</span>
                   </div>
                 </div>
               </CardContent>
@@ -134,59 +112,12 @@ export default function Delivery() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Стоимость:</span>
-                    <span className="font-semibold">от 600₽</span>
+                    <span className="font-semibold">в зависимости от заказа</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-
-          <Card className="border-border/50 mb-12">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <Icon name="CreditCard" className="text-primary" />
-                Способы оплаты
-              </h2>
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name="Wallet" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Наличными</h3>
-                    <p className="text-sm text-muted-foreground">При получении курьеру или в пункте выдачи</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name="CreditCard" className="text-accent" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Картой онлайн</h3>
-                    <p className="text-sm text-muted-foreground">Безопасная оплата на сайте</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name="Smartphone" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">СБП</h3>
-                    <p className="text-sm text-muted-foreground">Система быстрых платежей</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name="Building" className="text-accent" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">По счету</h3>
-                    <p className="text-sm text-muted-foreground">Для юридических лиц</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           <Card className="border-border/50 bg-gradient-to-br from-primary/5 to-accent/5">
             <CardContent className="p-8">
