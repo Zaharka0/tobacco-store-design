@@ -163,7 +163,7 @@ export default function AdminPromotions() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg"
+                  className="w-full px-4 py-2 border rounded-lg bg-background text-foreground"
                   required
                 />
               </div>
@@ -173,7 +173,7 @@ export default function AdminPromotions() {
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg"
+                  className="w-full px-4 py-2 border rounded-lg bg-background text-foreground"
                   rows={3}
                 />
               </div>
@@ -186,7 +186,7 @@ export default function AdminPromotions() {
                     value={formData.discount}
                     onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
                     placeholder="-20%"
-                    className="w-full px-4 py-2 border rounded-lg"
+                    className="w-full px-4 py-2 border rounded-lg bg-background text-foreground"
                   />
                 </div>
 
@@ -197,7 +197,7 @@ export default function AdminPromotions() {
                     value={formData.valid_until}
                     onChange={(e) => setFormData({ ...formData, valid_until: e.target.value })}
                     placeholder="31.12.2026"
-                    className="w-full px-4 py-2 border rounded-lg"
+                    className="w-full px-4 py-2 border rounded-lg bg-background text-foreground"
                   />
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function AdminPromotions() {
                   type="text"
                   value={formData.image_url}
                   onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-lg"
+                  className="w-full px-4 py-2 border rounded-lg bg-background text-foreground"
                 />
               </div>
 

@@ -28,6 +28,16 @@ export default function Delivery() {
             </div>
             <div className="flex items-center gap-3">
               <CartDrawer />
+              <Link to="/profile">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="gap-2"
+                >
+                  <Icon name="User" size={16} />
+                  <span className="hidden sm:inline">Мои заказы</span>
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 

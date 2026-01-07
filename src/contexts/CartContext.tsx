@@ -74,11 +74,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     try {
       const res = await fetch(`${apiUrl}?action=cart-items&cart_id=${currentCartId}`);
+      if (!res.ok) {
+        console.error('Cart load failed:', res.status);
+        return;
+      }
       const data = await res.json();
-      setItems(data.items);
-      setTotal(data.total);
+      setItems(data.items || []);
+      setTotal(data.total || 0);
     } catch (error) {
       console.error('Error loading cart:', error);
+      setItems([]);
+      setTotal(0);
     }
   };
 
@@ -86,7 +92,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const currentCartId = await ensureCart();
       
-      await fetch(`${apiUrl}?action=cart-item`, {
+      const res = await fetch(`${apiUrl}?action=cart-item`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -98,9 +104,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
         })
       });
       
+      if (!res.ok) {
+        throw new Error(`Failed to add to cart: ${res.status}`);
+      }
+      
       await loadCart(currentCartId);
     } catch (error) {
       console.error('Error adding to cart:', error);
+      alert('Не удалось добавить товар в корзину. Проверьте подключение к интернету.');
       throw error;
     }
   };

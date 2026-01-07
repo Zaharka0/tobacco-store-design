@@ -62,6 +62,16 @@ export default function Promotions() {
             </div>
             <div className="flex items-center gap-3">
               <CartDrawer />
+              <Link to="/profile">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="gap-2"
+                >
+                  <Icon name="User" size={16} />
+                  <span className="hidden sm:inline">Мои заказы</span>
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -118,10 +128,12 @@ export default function Promotions() {
                     <p className="text-muted-foreground mb-4">
                       {promo.description}
                     </p>
-                    <Button className="w-full gap-2">
-                      <Icon name="ShoppingBag" size={18} />
-                      Перейти в каталог
-                    </Button>
+                    <Link to="/catalog" className="block w-full">
+                      <Button className="w-full gap-2">
+                        <Icon name="ShoppingBag" size={18} />
+                        Перейти в каталог
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

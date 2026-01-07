@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
+import CartDrawer from '@/components/CartDrawer';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
 
@@ -97,6 +98,17 @@ export default function Catalog() {
               <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
+              <CartDrawer />
+              <Link to="/profile">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="gap-2"
+                >
+                  <Icon name="User" size={16} />
+                  <span className="hidden sm:inline">Мои заказы</span>
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 
