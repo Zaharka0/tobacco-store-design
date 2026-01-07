@@ -107,6 +107,16 @@ export default function Index() {
                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-sm font-medium">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
               </div>
+              <Link to="/profile">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="gap-2"
+                >
+                  <Icon name="User" size={16} />
+                  <span className="hidden sm:inline">Мои заказы</span>
+                </Button>
+              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 

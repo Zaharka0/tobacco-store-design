@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import NotificationCenter from '@/components/NotificationCenter';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
 
@@ -202,7 +203,12 @@ export default function Admin() {
                 WhiteShishka Admin
               </span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
+              <NotificationCenter />
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin/analytics'}>
+                <Icon name="BarChart3" size={16} className="mr-2" />
+                Аналитика
+              </Button>
               <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin/texts'}>
                 <Icon name="Type" size={16} className="mr-2" />
                 Тексты
