@@ -15,7 +15,7 @@ def handler(event: dict, context) -> dict:
             'statusCode': 200,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type, X-Authorization'
             },
             'body': '',
@@ -239,6 +239,159 @@ def handler(event: dict, context) -> dict:
             cursor.execute(
                 "UPDATE admin_notifications SET is_read = TRUE WHERE id = %s",
                 (notif_id,)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'success': True}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'cart' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            user_phone = body.get('user_phone')
+            session_id = body.get('session_id', '')
+            
+            cursor.execute(
+                "SELECT id FROM carts WHERE user_phone = %s AND status = 'active' ORDER BY created_at DESC LIMIT 1",
+                (user_phone,)
+            )
+            cart = cursor.fetchone()
+            
+            if not cart:
+                cursor.execute(
+                    "INSERT INTO carts (user_phone, session_id, status) VALUES (%s, %s, 'active') RETURNING id",
+                    (user_phone, session_id)
+                )
+                cart_id = cursor.fetchone()['id']
+            else:
+                cart_id = cart['id']
+            
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'cart_id': cart_id}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'cart-item' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            cart_id = body.get('cart_id')
+            product_id = body.get('product_id')
+            product_name = body.get('product_name')
+            product_price = body.get('product_price')
+            quantity = body.get('quantity', 1)
+            
+            cursor.execute(
+                "SELECT id, quantity FROM cart_items WHERE cart_id = %s AND product_id = %s",
+                (cart_id, product_id)
+            )
+            existing = cursor.fetchone()
+            
+            if existing:
+                cursor.execute(
+                    "UPDATE cart_items SET quantity = quantity + %s WHERE id = %s",
+                    (quantity, existing['id'])
+                )
+            else:
+                cursor.execute(
+                    "INSERT INTO cart_items (cart_id, product_id, product_name, product_price, quantity) VALUES (%s, %s, %s, %s, %s)",
+                    (cart_id, product_id, product_name, product_price, quantity)
+                )
+            
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'success': True}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'cart-items' and method == 'GET':
+            query_params = event.get('queryStringParameters', {})
+            cart_id = query_params.get('cart_id') if query_params else None
+            
+            if not cart_id:
+                return {
+                    'statusCode': 400,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'cart_id required'}),
+                    'isBase64Encoded': False
+                }
+            
+            cursor.execute("""
+                SELECT id, product_id, product_name, product_price, quantity
+                FROM cart_items
+                WHERE cart_id = %s
+            """, (cart_id,))
+            items = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            
+            items_list = []
+            total = 0
+            for item in items:
+                item_total = float(item['product_price']) * item['quantity']
+                total += item_total
+                items_list.append({
+                    'id': item['id'],
+                    'product_id': item['product_id'],
+                    'product_name': item['product_name'],
+                    'product_price': float(item['product_price']),
+                    'quantity': item['quantity'],
+                    'total': item_total
+                })
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'items': items_list, 'total': total}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'cart-item-remove' and method == 'DELETE':
+            query_params = event.get('queryStringParameters', {})
+            item_id = query_params.get('item_id') if query_params else None
+            
+            if not item_id:
+                return {
+                    'statusCode': 400,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'item_id required'}),
+                    'isBase64Encoded': False
+                }
+            
+            cursor.execute("UPDATE cart_items SET quantity = 0 WHERE id = %s", (item_id,))
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'success': True}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'cart-checkout' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            cart_id = body.get('cart_id')
+            telegram_user_id = body.get('telegram_user_id')
+            
+            cursor.execute(
+                "UPDATE carts SET status = 'checkout', telegram_user_id = %s WHERE id = %s",
+                (telegram_user_id, cart_id)
             )
             conn.commit()
             cursor.close()

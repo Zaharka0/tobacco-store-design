@@ -2,6 +2,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface Product {
   id?: number;
@@ -24,11 +26,30 @@ interface ProductDetailModalProps {
 }
 
 export default function ProductDetailModal({ product, open, onOpenChange }: ProductDetailModalProps) {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
   if (!product) return null;
 
   const finalPrice = product.discount > 0 
     ? product.price - (product.price * product.discount / 100)
     : product.price;
+
+  const handleAddToCart = async () => {
+    try {
+      await addToCart(product.id || 0, product.name, finalPrice);
+      toast({
+        title: 'Добавлено в корзину',
+        description: `${product.name} добавлен в корзину`
+      });
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось добавить товар',
+        variant: 'destructive'
+      });
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -97,11 +118,16 @@ export default function ProductDetailModal({ product, open, onOpenChange }: Prod
             <Button 
               className="w-full" 
               size="lg"
-              onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+              onClick={handleAddToCart}
+              disabled={!product.in_stock}
             >
-              <Icon name="MessageCircle" size={20} className="mr-2" />
-              Заказать в боте
+              <Icon name="ShoppingCart" size={20} className="mr-2" />
+              {product.in_stock ? 'Добавить в корзину' : 'Нет в наличии'}
             </Button>
+            
+            <p className="text-sm text-center text-muted-foreground">
+              Оплата через Telegram-бота после добавления в корзину
+            </p>
           </div>
         </div>
       </DialogContent>

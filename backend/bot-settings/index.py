@@ -46,6 +46,16 @@ def get_products_list(cur):
     ''')
     return cur.fetchall()
 
+def get_cart_items(cur, cart_id: int):
+    '''Получить товары из корзины'''
+    cur.execute('''
+        SELECT product_name, product_price, quantity, 
+               (product_price * quantity) as total
+        FROM cart_items 
+        WHERE cart_id = %s AND quantity > 0
+    ''', (cart_id,))
+    return cur.fetchall()
+
 def handle_webhook(event: dict, cur, conn):
     '''Обработка webhook от Telegram'''
     settings, messages = get_bot_config(cur)
@@ -74,9 +84,37 @@ def handle_webhook(event: dict, cur, conn):
         chat_id = message['chat']['id']
         text = message.get('text', '')
         
-        if text == '/start':
-            welcome_text = messages.get('welcome', 'Привет!')
-            send_telegram_message(bot_token, chat_id, welcome_text)
+        if text.startswith('/start'):
+            parts = text.split('_')
+            if len(parts) > 1 and parts[0] == '/start order':
+                cart_id = int(parts[1])
+                items = get_cart_items(cur, cart_id)
+                
+                if items:
+                    order_text = "🛒 <b>Ваш заказ:</b>\n\n"
+                    total = 0
+                    for item in items:
+                        order_text += f"• {item['product_name']} x{item['quantity']} = {item['total']}₽\n"
+                        total += item['total']
+                    
+                    order_text += f"\n💰 <b>Итого: {total}₽</b>\n\n"
+                    order_text += "Для оформления заказа свяжитесь с менеджером"
+                    
+                    keyboard = {
+                        'inline_keyboard': [
+                            [{'text': '💬 Связаться с менеджером', 'url': f'https://t.me/{settings.get("admin_username", "whiteshishka")}'}]
+                        ]
+                    }
+                    
+                    send_telegram_message(bot_token, chat_id, order_text, keyboard)
+                    
+                    cur.execute('UPDATE carts SET telegram_user_id = %s WHERE id = %s', (str(chat_id), cart_id))
+                    conn.commit()
+                else:
+                    send_telegram_message(bot_token, chat_id, "Корзина пуста")
+            else:
+                welcome_text = messages.get('welcome', 'Привет!')
+                send_telegram_message(bot_token, chat_id, welcome_text)
         
         elif text == '/help':
             help_text = messages.get('help', 'Доступные команды:\n/start\n/catalog\n/help')
