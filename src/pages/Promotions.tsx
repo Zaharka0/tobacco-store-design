@@ -125,7 +125,7 @@ export default function Promotions() {
                   </div>
                 </CardContent>
               </Card>
-            )))}
+            ))}
           </div>
 
           <Card className="border-border/50 bg-gradient-to-br from-primary/5 to-accent/5">
