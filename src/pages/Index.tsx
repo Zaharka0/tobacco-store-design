@@ -81,74 +81,74 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
               <Link 
                 to="/login" 
-                className="w-12 h-12 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden flex-shrink-0"
                 title="Админ-панель"
               >
                 <img src="https://cdn.poehali.dev/files/photo_2026-01-04_20-11-08.jpg" alt="WhiteShishka Logo" className="w-full h-full object-cover" />
               </Link>
-              <Link to="/" className="flex items-center gap-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <Link to="/" className="flex items-center gap-2 min-w-0">
+                <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent truncate">
                   {getText('site_name', 'WhiteShishka')}
                 </span>
               </Link>
             </div>
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="text-foreground font-medium">{getText('nav_home', 'Главная')}</Link>
-              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_catalog', 'Каталог')}</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_about', 'О магазине')}</Link>
-              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_delivery', 'Доставка')}</Link>
-              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_promotions', 'Акции')}</Link>
-              <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">{getText('nav_faq', 'FAQ')}</Link>
+            <div className="hidden md:flex items-center gap-4 lg:gap-6">
+              <Link to="/" className="text-foreground font-medium text-sm lg:text-base">{getText('nav_home', 'Главная')}</Link>
+              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_catalog', 'Каталог')}</Link>
+              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_about', 'О магазине')}</Link>
+              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_delivery', 'Доставка')}</Link>
+              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_promotions', 'Акции')}</Link>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm font-medium">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
+                <span className="text-sm font-medium whitespace-nowrap">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
               </div>
 
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="gap-2"
+                className="gap-2 text-xs md:text-sm px-2 md:px-4"
                 onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
               >
-                <Icon name="MessageCircle" size={16} />
+                <Icon name="MessageCircle" size={14} className="md:w-4 md:h-4" />
                 <span className="hidden sm:inline">{getText('nav_bot_button', 'Написать в бот')}</span>
+                <span className="sm:hidden">Бот</span>
               </Button>
             </div>
           </div>
         </div>
       </nav>
 
-      <section className="relative overflow-hidden py-24 md:py-32">
+      <section className="relative overflow-hidden py-12 md:py-24 lg:py-32">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(139,92,246,0.1),transparent_50%)]" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <Badge className="mb-4 px-4 py-1 text-sm bg-primary/20 text-primary border-primary/50">
+            <Badge className="mb-4 px-3 md:px-4 py-1 text-xs md:text-sm bg-primary/20 text-primary border-primary/50">
               {getText('hero_badge', '18+')}
             </Badge>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent leading-tight">
               {getText('hero_title', 'Премиум Вейп-Магазин')}
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-6 md:mb-8 px-2">
               {getText('hero_subtitle', 'Сайт несёт исключительно информационный характер и не продвигает какие либо товары или услуги. Контент может содержать материалы, не предназначенные для несовершеннолетних!')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/catalog">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                  <Icon name="Eye" size={20} className="mr-2" />
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4">
+              <Link to="/catalog" className="w-full sm:w-auto">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold w-full sm:w-auto">
+                  <Icon name="Eye" size={18} className="mr-2" />
                   {getText('hero_catalog_button', 'Смотреть каталог')}
                 </Button>
               </Link>
-              <Link to="/promotions">
-                <Button size="lg" variant="outline" className="border-2">
-                  <Icon name="Sparkles" size={20} className="mr-2" />
+              <Link to="/promotions" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-2 w-full sm:w-auto">
+                  <Icon name="Sparkles" size={18} className="mr-2" />
                   {getText('hero_promotions_button', 'Акции')}
                 </Button>
               </Link>
@@ -157,21 +157,21 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="py-16 bg-card/50">
+      <section className="py-8 md:py-16 bg-card/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {[
               { icon: 'Cigarette', title: getText('cat1_title', 'Одноразки'), desc: getText('cat1_desc', 'Удобно и просто') },
               { icon: 'Droplets', title: getText('cat2_title', 'Жидкости'), desc: getText('cat2_desc', 'Все вкусы') },
               { icon: 'Puzzle', title: getText('cat3_title', 'Аксессуары'), desc: getText('cat3_desc', 'Для всех моделей') },
             ].map((item, i) => (
               <Card key={i} className="border-border/50 bg-card/80 backdrop-blur hover:border-primary/50 transition-all hover:scale-105 animate-scale-in" style={{ animationDelay: `${i * 100}ms` }}>
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mx-auto mb-3">
-                    <Icon name={item.icon as any} className="text-primary" size={24} />
+                <CardContent className="p-4 md:p-6 text-center">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary/20 flex items-center justify-center mx-auto mb-2 md:mb-3">
+                    <Icon name={item.icon as any} className="text-primary" size={20} />
                   </div>
-                  <h3 className="font-semibold mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <h3 className="font-semibold mb-1 text-sm md:text-base">{item.title}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground">{item.desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -179,34 +179,34 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="catalog" className="py-20">
+      <section id="catalog" className="py-10 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">{getText('catalog_title', 'Каталог товаров')}</h2>
-            <p className="text-muted-foreground">{getText('catalog_subtitle', 'Выберите категорию и фильтры для удобного поиска')}</p>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">{getText('catalog_title', 'Каталог товаров')}</h2>
+            <p className="text-sm md:text-base text-muted-foreground">{getText('catalog_subtitle', 'Выберите категорию и фильтры для удобного поиска')}</p>
           </div>
 
-          <div className="mb-8 space-y-6">
+          <div className="mb-6 md:mb-8 space-y-4 md:space-y-6">
             <div>
-              <label className="text-sm font-medium mb-3 block">{getText('catalog_filter_category', 'Категория')}</label>
+              <label className="text-xs md:text-sm font-medium mb-2 md:mb-3 block">{getText('catalog_filter_category', 'Категория')}</label>
               <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-                <TabsList className="grid w-full grid-cols-4 bg-card/50">
-                  <TabsTrigger value="all">{getText('catalog_tab_all', 'Все')}</TabsTrigger>
-                  <TabsTrigger value="Одноразки">{getText('catalog_tab_disposable', 'Одноразки')}</TabsTrigger>
-                  <TabsTrigger value="Жидкости">{getText('catalog_tab_liquids', 'Жидкости')}</TabsTrigger>
-                  <TabsTrigger value="Аксессуары">{getText('catalog_tab_accessories', 'Аксессуары')}</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-4 bg-card/50 h-auto p-1">
+                  <TabsTrigger value="all" className="text-xs md:text-sm px-2 py-2">{getText('catalog_tab_all', 'Все')}</TabsTrigger>
+                  <TabsTrigger value="Одноразки" className="text-xs md:text-sm px-2 py-2">{getText('catalog_tab_disposable', 'Одноразки')}</TabsTrigger>
+                  <TabsTrigger value="Жидкости" className="text-xs md:text-sm px-2 py-2">{getText('catalog_tab_liquids', 'Жидкости')}</TabsTrigger>
+                  <TabsTrigger value="Аксессуары" className="text-xs md:text-sm px-2 py-2">{getText('catalog_tab_accessories', 'Аксессуары')}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-3 block">{getText('catalog_filter_price', 'Цена')}</label>
+              <label className="text-xs md:text-sm font-medium mb-2 md:mb-3 block">{getText('catalog_filter_price', 'Цена')}</label>
               <Tabs value={priceRange} onValueChange={setPriceRange}>
-                <TabsList className="bg-card/50">
-                  <TabsTrigger value="all">{getText('catalog_price_all', 'Все')}</TabsTrigger>
-                  <TabsTrigger value="low">{getText('catalog_price_low', 'До 1000₽')}</TabsTrigger>
-                  <TabsTrigger value="mid">{getText('catalog_price_mid', '1000-3000₽')}</TabsTrigger>
-                  <TabsTrigger value="high">{getText('catalog_price_high', 'От 3000₽')}</TabsTrigger>
+                <TabsList className="bg-card/50 h-auto p-1 flex-wrap">
+                  <TabsTrigger value="all" className="text-xs md:text-sm px-3 py-2">{getText('catalog_price_all', 'Все')}</TabsTrigger>
+                  <TabsTrigger value="low" className="text-xs md:text-sm px-3 py-2">{getText('catalog_price_low', 'До 1000₽')}</TabsTrigger>
+                  <TabsTrigger value="mid" className="text-xs md:text-sm px-3 py-2">{getText('catalog_price_mid', '1000-3000₽')}</TabsTrigger>
+                  <TabsTrigger value="high" className="text-xs md:text-sm px-3 py-2">{getText('catalog_price_high', 'От 3000₽')}</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -223,7 +223,7 @@ export default function Index() {
               <Button onClick={loadProducts}>{getText('error_retry_button', 'Попробовать снова')}</Button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
               {filteredProducts.slice(0, 8).map((product) => {
                 const finalPrice = calculateFinalPrice(product.price, product.discount);
                 return (
@@ -237,30 +237,30 @@ export default function Index() {
                         <img 
                           src={product.image_url} 
                           alt={product.name}
-                          className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-32 md:h-40 object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                         {product.is_new && (
-                          <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground text-xs">
+                          <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground text-[10px] md:text-xs px-1.5 md:px-2 py-0.5">
                             {getText('catalog_badge_new', 'Новинка')}
                           </Badge>
                         )}
                         {product.discount > 0 && (
-                          <Badge className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-xs">
+                          <Badge className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-[10px] md:text-xs px-1.5 md:px-2 py-0.5">
                             -{product.discount}%
                           </Badge>
                         )}
                       </div>
-                      <div className="p-3">
-                        <h3 className="font-semibold text-sm mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                      <div className="p-2 md:p-3">
+                        <h3 className="font-semibold text-xs md:text-sm mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                           {product.name}
                         </h3>
-                        <div className="mt-2">
+                        <div className="mt-1 md:mt-2">
                           {product.discount > 0 && (
-                            <span className="text-xs text-muted-foreground line-through block">
+                            <span className="text-[10px] md:text-xs text-muted-foreground line-through block">
                               {product.price}₽
                             </span>
                           )}
-                          <span className="text-xl font-bold text-primary">
+                          <span className="text-base md:text-xl font-bold text-primary">
                             {Math.round(finalPrice)}₽
                           </span>
                         </div>

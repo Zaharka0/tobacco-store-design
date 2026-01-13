@@ -14,7 +14,7 @@ import Catalog from "./pages/Catalog";
 import About from "./pages/About";
 import Delivery from "./pages/Delivery";
 import Promotions from "./pages/Promotions";
-import FAQ from "./pages/FAQ";
+
 import Admin from "./pages/Admin";
 import AdminTexts from "./pages/AdminTexts";
 import AdminBot from "./pages/AdminBot";
@@ -39,7 +39,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/delivery" element={<Delivery />} />
             <Route path="/promotions" element={<Promotions />} />
-            <Route path="/faq" element={<FAQ />} />
+
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />

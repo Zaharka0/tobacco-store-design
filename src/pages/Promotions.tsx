@@ -42,32 +42,32 @@ export default function Promotions() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between min-w-0">
+            <Link to="/" className="flex items-center gap-2 flex-shrink-0 min-w-0">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden flex-shrink-0">
                 <img src="https://cdn.poehali.dev/files/photo_2026-01-04_20-11-08.jpg" alt="WhiteShishka Logo" className="w-full h-full object-cover" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent truncate">
                 WhiteShishka
               </span>
             </Link>
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">Главная</Link>
-              <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
-              <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
-              <Link to="/promotions" className="text-foreground font-medium">Акции</Link>
-              <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
+            <div className="hidden md:flex items-center gap-6 flex-shrink-0">
+              <Link to="/" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Главная</Link>
+              <Link to="/catalog" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
+              <Link to="/about" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
+              <Link to="/delivery" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
+              <Link to="/promotions" className="text-sm lg:text-base text-foreground font-medium">Акции</Link>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="gap-2"
+                className="gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-4"
                 onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
               >
-                <Icon name="MessageCircle" size={16} />
+                <Icon name="MessageCircle" className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                <span className="sm:hidden">Бот</span>
                 <span className="hidden sm:inline">Написать в бот</span>
               </Button>
             </div>
