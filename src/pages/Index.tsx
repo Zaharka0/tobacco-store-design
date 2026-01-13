@@ -8,8 +8,7 @@ import { useOnlineUsers } from '@/hooks/useOnlineUsers';
 import { useSiteTexts } from '@/hooks/useSiteTexts';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
-import CartDrawer from '@/components/CartDrawer';
-import { useCart } from '@/contexts/CartContext';
+
 import { useToast } from '@/hooks/use-toast';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
@@ -38,7 +37,6 @@ export default function Index() {
   const [priceRange, setPriceRange] = useState<string>('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const { addToCart } = useCart();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -112,17 +110,7 @@ export default function Index() {
                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-sm font-medium">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
               </div>
-              <CartDrawer />
-              <Link to="/profile">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="gap-2"
-                >
-                  <Icon name="User" size={16} />
-                  <span className="hidden sm:inline">Мои заказы</span>
-                </Button>
-              </Link>
+
               <Button 
                 variant="outline" 
                 size="sm" 

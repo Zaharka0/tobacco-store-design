@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import CartDrawer from '@/components/CartDrawer';
+
 import funcUrls from '../../backend/func2url.json';
 
 interface UserOrder {
@@ -79,7 +79,6 @@ export default function UserProfile() {
               </span>
             </Link>
             <div className="flex items-center gap-3">
-              <CartDrawer />
               <Link to="/">
                 <Button variant="outline" size="sm">
                   <Icon name="Home" size={16} className="mr-2" />

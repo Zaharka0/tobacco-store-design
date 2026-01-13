@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
-import CartDrawer from '@/components/CartDrawer';
+
 
 export default function FAQ() {
   const faqCategories = [
@@ -103,17 +103,6 @@ export default function FAQ() {
               <Link to="/faq" className="text-foreground font-medium">FAQ</Link>
             </div>
             <div className="flex items-center gap-3">
-              <CartDrawer />
-              <Link to="/profile">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="gap-2"
-                >
-                  <Icon name="User" size={16} />
-                  <span className="hidden sm:inline">Мои заказы</span>
-                </Button>
-              </Link>
               <Button 
                 variant="outline" 
                 size="sm" 
