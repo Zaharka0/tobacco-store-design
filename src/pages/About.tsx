@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
+import MobileMenu from '@/components/MobileMenu';
 
 
 export default function About() {
@@ -36,6 +37,7 @@ export default function About() {
                 <span className="sm:hidden">Бот</span>
                 <span className="hidden sm:inline">Написать в бот</span>
               </Button>
+              <MobileMenu currentPath="/about" />
             </div>
           </div>
         </div>

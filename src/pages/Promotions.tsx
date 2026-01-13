@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
+import MobileMenu from '@/components/MobileMenu';
 
 import funcUrls from '../../backend/func2url.json';
 
@@ -70,6 +71,7 @@ export default function Promotions() {
                 <span className="sm:hidden">Бот</span>
                 <span className="hidden sm:inline">Написать в бот</span>
               </Button>
+              <MobileMenu currentPath="/promotions" />
             </div>
           </div>
         </div>

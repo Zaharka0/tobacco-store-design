@@ -8,7 +8,7 @@ import { useOnlineUsers } from '@/hooks/useOnlineUsers';
 import { useSiteTexts } from '@/hooks/useSiteTexts';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
-
+import MobileMenu from '@/components/MobileMenu';
 import { useToast } from '@/hooks/use-toast';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
@@ -120,6 +120,8 @@ export default function Index() {
                 <span className="hidden sm:inline">{getText('nav_bot_button', 'Написать в бот')}</span>
                 <span className="sm:hidden">Бот</span>
               </Button>
+
+              <MobileMenu currentPath="/" />
             </div>
           </div>
         </div>

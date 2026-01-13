@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
+import MobileMenu from '@/components/MobileMenu';
 
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
@@ -107,6 +108,7 @@ export default function Catalog() {
                 <span className="sm:hidden">Бот</span>
                 <span className="hidden sm:inline">Написать в бот</span>
               </Button>
+              <MobileMenu currentPath="/catalog" />
             </div>
           </div>
         </div>
