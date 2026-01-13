@@ -11,8 +11,8 @@ export default function Delivery() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
-                <img src="https://cdn.poehali.dev/files/image.png" alt="Logo" className="w-full h-full object-cover" />
+              <div className="w-12 h-12 rounded-xl hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+                <img src="https://cdn.poehali.dev/files/photo_2026-01-04_20-11-08.jpg" alt="WhiteShishka Logo" className="w-full h-full object-cover" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 WhiteShishka
