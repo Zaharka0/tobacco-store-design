@@ -264,7 +264,10 @@ export default function Catalog() {
       <footer className="border-t border-border/50 mt-20 bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-muted-foreground">
-            <p>© 2026 WhiteShishka. Все права защищены.</p>
+            <div className="space-y-2">
+              <p>© 2026 WhiteShishka. Все права защищены.</p>
+              <p className="text-sm">Сайт несёт исключительно информационный характер и не продвигает какие либо товары или услуги. Контент может содержать материалы, не предназначенные для несовершеннолетних!</p>
+            </div>
           </div>
         </div>
       </footer>
