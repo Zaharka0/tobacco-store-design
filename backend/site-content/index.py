@@ -2,9 +2,10 @@ import json
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from email_service import send_welcome_email, send_email
 
 def handler(event: dict, context) -> dict:
-    """API для управления контентом сайта, аналитикой и заказами"""
+    """API для управления контентом сайта, аналитикой, заказами и email-рассылкой"""
     
     method = event.get('httpMethod', 'GET')
     query_params = event.get('queryStringParameters', {}) or {}
@@ -540,6 +541,78 @@ def handler(event: dict, context) -> dict:
                 'statusCode': 200,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
                 'body': json.dumps({'message': 'Акция удалена'}),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'newsletter-subscribe' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            email = body.get('email', '').strip()
+            
+            if not email or '@' not in email:
+                return {
+                    'statusCode': 400,
+                    'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'error': 'Некорректный email адрес'}),
+                    'isBase64Encoded': False
+                }
+            
+            cursor.execute('''
+                INSERT INTO newsletter_subscribers (email, subscribed_at, active)
+                VALUES (%s, NOW(), true)
+                ON CONFLICT (email) 
+                DO UPDATE SET active = true, subscribed_at = NOW()
+                RETURNING id
+            ''', (email,))
+            
+            subscriber_id = cursor.fetchone()['id']
+            conn.commit()
+            cursor.close()
+            conn.close()
+            
+            try:
+                send_welcome_email(email)
+            except Exception as e:
+                pass
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({
+                    'success': True,
+                    'message': 'Вы успешно подписались на рассылку!'
+                }),
+                'isBase64Encoded': False
+            }
+        
+        elif action == 'newsletter-send' and method == 'POST':
+            body = json.loads(event.get('body', '{}'))
+            subject = body.get('subject', '')
+            content = body.get('content', '')
+            
+            cursor.execute('SELECT email FROM newsletter_subscribers WHERE active = true')
+            subscribers = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            
+            sent_count = 0
+            failed_count = 0
+            
+            for row in subscribers:
+                try:
+                    send_email(row['email'], subject, content)
+                    sent_count += 1
+                except Exception:
+                    failed_count += 1
+            
+            return {
+                'statusCode': 200,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({
+                    'success': True,
+                    'sent': sent_count,
+                    'failed': failed_count,
+                    'total': len(subscribers)
+                }),
                 'isBase64Encoded': False
             }
         
