@@ -99,11 +99,11 @@ export default function About() {
                 <p className="text-muted-foreground mb-6">
                   Свяжитесь с нами любым удобным способом, и мы с радостью поможем вам!
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button className="gap-2">@whiteshishka_bot</Button>
-                  <Button variant="outline" className="gap-2">
+                <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+                  <Button className="gap-2 w-full sm:w-auto">@whiteshishka_bot</Button>
+                  <Button variant="outline" className="gap-2 w-full sm:w-auto text-xs sm:text-sm">
                     <Icon name="Mail" size={18} />
-                    info@whiteshishkakrd.ru
+                    <span className="truncate">info@whiteshishkakrd.ru</span>
                   </Button>
                 </div>
               </CardContent>

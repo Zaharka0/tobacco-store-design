@@ -172,6 +172,7 @@ export default function Catalog() {
                 size="sm" 
                 onClick={loadProducts}
                 disabled={loading}
+                aria-label="Обновить список товаров"
               >
                 <Icon name="RefreshCw" size={16} className={loading ? 'animate-spin' : ''} />
               </Button>
