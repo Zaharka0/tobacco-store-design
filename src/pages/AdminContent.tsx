@@ -27,7 +27,6 @@ const PAGE_NAMES = {
   catalog: 'Каталог',
   about: 'О магазине',
   delivery: 'Доставка',
-  promotions: 'Акции',
   faq: 'FAQ'
 };
 

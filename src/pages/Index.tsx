@@ -102,7 +102,6 @@ export default function Index() {
               <Link to="/catalog" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_catalog', 'Каталог')}</Link>
               <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_about', 'О магазине')}</Link>
               <Link to="/delivery" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_delivery', 'Доставка')}</Link>
-              <Link to="/promotions" className="text-muted-foreground hover:text-foreground transition-colors text-sm lg:text-base">{getText('nav_promotions', 'Акции')}</Link>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
               <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/20 border border-accent/30">
@@ -146,12 +145,6 @@ export default function Index() {
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold w-full sm:w-auto">
                   <Icon name="Eye" size={18} className="mr-2" />
                   {getText('hero_catalog_button', 'Смотреть каталог')}
-                </Button>
-              </Link>
-              <Link to="/promotions" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="border-2 w-full sm:w-auto">
-                  <Icon name="Sparkles" size={18} className="mr-2" />
-                  {getText('hero_promotions_button', 'Акции')}
                 </Button>
               </Link>
             </div>

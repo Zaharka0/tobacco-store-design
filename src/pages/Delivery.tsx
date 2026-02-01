@@ -24,7 +24,6 @@ export default function Delivery() {
               <Link to="/catalog" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Каталог</Link>
               <Link to="/about" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">О магазине</Link>
               <Link to="/delivery" className="text-sm lg:text-base text-foreground font-medium">Доставка</Link>
-              <Link to="/promotions" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Акции</Link>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
               <Button 

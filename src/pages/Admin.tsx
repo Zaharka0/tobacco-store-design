@@ -217,10 +217,6 @@ export default function Admin() {
                 <Icon name="Bot" size={16} className="mr-2" />
                 Telegram
               </Button>
-              <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin/promotions'}>
-                <Icon name="Sparkles" size={16} className="mr-2" />
-                Акции
-              </Button>
               <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
                 <Icon name="Home" size={16} className="mr-2" />
                 На сайт
