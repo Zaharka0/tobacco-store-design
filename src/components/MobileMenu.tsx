@@ -17,6 +17,7 @@ export default function MobileMenu({ currentPath = '/' }: MobileMenuProps) {
     { path: '/catalog', label: getText('nav_catalog', 'Каталог') },
     { path: '/about', label: getText('nav_about', 'О магазине') },
     { path: '/delivery', label: getText('nav_delivery', 'Доставка') },
+    { path: '/privacy', label: 'Конфиденциальность' },
   ];
 
   return (

@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Catalog from "./pages/Catalog";
 import About from "./pages/About";
 import Delivery from "./pages/Delivery";
+import Privacy from "./pages/Privacy";
 
 import Admin from "./pages/Admin";
 import AdminTexts from "./pages/AdminTexts";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/about" element={<About />} />
             <Route path="/delivery" element={<Delivery />} />
+            <Route path="/privacy" element={<Privacy />} />
 
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/login" element={<Login />} />
