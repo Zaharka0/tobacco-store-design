@@ -9,6 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import NotificationCenter from '@/components/NotificationCenter';
+import ImageUploader from '@/components/ImageUploader';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
 
@@ -278,15 +279,11 @@ export default function Admin() {
                     </Select>
                   </div>
 
-                  <div>
-                    <Label htmlFor="image_url">Image URL</Label>
-                    <Input
-                      id="image_url"
-                      value={formData.image_url}
-                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                      required
-                    />
-                  </div>
+                  <ImageUploader
+                    value={formData.image_url}
+                    onChange={(url) => setFormData({ ...formData, image_url: url })}
+                    label="Изображение товара"
+                  />
 
                   <div>
                     <Label htmlFor="short_description">Short Description</Label>
