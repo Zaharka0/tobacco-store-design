@@ -143,15 +143,16 @@ export default function Promotions() {
                 <p className="text-muted-foreground mb-6">
                   Подпишитесь на рассылку и узнавайте первыми о специальных предложениях и эксклюзивных скидках
                 </p>
-                <div className="flex gap-3 max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <input
                     type="email"
                     placeholder="Ваш email"
-                    className="flex-1 px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1 px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary w-full"
                   />
-                  <Button className="gap-2">
+                  <Button className="gap-2 w-full sm:w-auto whitespace-nowrap">
                     <Icon name="Send" size={18} />
-                    Подписаться
+                    <span className="hidden sm:inline">Подписаться</span>
+                    <span className="sm:hidden">OK</span>
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-4">
