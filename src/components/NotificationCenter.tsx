@@ -32,11 +32,19 @@ export default function NotificationCenter() {
 
   const loadNotifications = async () => {
     try {
+      if (!apiUrl) {
+        setNotifications([]);
+        return;
+      }
       const res = await fetch(`${apiUrl}?action=notifications`);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       const data = await res.json();
-      setNotifications(data.notifications);
+      setNotifications(data.notifications || []);
     } catch (error) {
       console.error('Error loading notifications:', error);
+      setNotifications([]);
     }
   };
 
