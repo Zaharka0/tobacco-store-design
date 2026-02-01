@@ -46,7 +46,19 @@ export default function ImageUploader({ value, onChange, label = 'Изображ
         const base64 = event.target?.result as string;
         setPreview(base64);
         
-        onChange(base64);
+        // Загрузить на S3 через API
+        const uploadResponse = await fetch('https://functions.poehali.dev/defc8cb0-8d1b-451b-86c4-fe4dcda5dc9e', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64 }),
+        });
+        
+        if (!uploadResponse.ok) {
+          throw new Error('Не удалось загрузить изображение на сервер');
+        }
+        
+        const { url } = await uploadResponse.json();
+        onChange(url);
         
         toast({
           title: 'Успешно',
@@ -60,6 +72,7 @@ export default function ImageUploader({ value, onChange, label = 'Изображ
         description: error instanceof Error ? error.message : 'Не удалось загрузить изображение',
         variant: 'destructive',
       });
+      setPreview('');
     } finally {
       setUploading(false);
     }
