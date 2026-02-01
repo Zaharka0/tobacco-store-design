@@ -51,15 +51,15 @@ def handler(event: dict, context) -> dict:
                     'isBase64Encoded': False
                 }
             else:
-                # Получить все товары с пагинацией
+                # Получить все товары с пагинацией (без больших изображений)
                 category = params.get('category')
-                limit = int(params.get('limit', '10'))  # Максимум 10 товаров за раз (из-за больших изображений)
+                limit = int(params.get('limit', '100'))
                 offset = int(params.get('offset', '0'))
                 
                 if category:
-                    cursor.execute(f'SELECT * FROM {schema}.products WHERE category = %s ORDER BY created_at DESC LIMIT %s OFFSET %s', (category, limit, offset))
+                    cursor.execute(f'SELECT id, name, price, category, short_description, in_stock, is_new, discount, created_at, updated_at FROM {schema}.products WHERE category = %s ORDER BY created_at DESC LIMIT %s OFFSET %s', (category, limit, offset))
                 else:
-                    cursor.execute(f'SELECT * FROM {schema}.products ORDER BY created_at DESC LIMIT %s OFFSET %s', (limit, offset))
+                    cursor.execute(f'SELECT id, name, price, category, short_description, in_stock, is_new, discount, created_at, updated_at FROM {schema}.products ORDER BY created_at DESC LIMIT %s OFFSET %s', (limit, offset))
                 
                 products = cursor.fetchall()
                 

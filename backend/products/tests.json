@@ -1,15 +1,15 @@
 {
   "tests": [
     {
-      "name": "Получить все товары",
+      "name": "Получить товары с лимитом 100",
       "method": "GET",
-      "path": "/",
+      "path": "/?limit=100",
       "expectedStatus": 200
     },
     {
-      "name": "Получить товары по категории",
+      "name": "Получить товар с изображением",
       "method": "GET",
-      "path": "/?category=Одноразовые",
+      "path": "/?id=16",
       "expectedStatus": 200
     }
   ]
