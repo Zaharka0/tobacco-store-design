@@ -221,10 +221,6 @@ export default function Admin() {
                 <Icon name="Sparkles" size={16} className="mr-2" />
                 Акции
               </Button>
-              <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin/email'}>
-                <Icon name="Mail" size={16} className="mr-2" />
-                Email
-              </Button>
               <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
                 <Icon name="Home" size={16} className="mr-2" />
                 На сайт
