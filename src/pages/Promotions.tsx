@@ -24,7 +24,7 @@ export default function Promotions() {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
-  const API_URL = funcUrls['site-content'];
+  const API_URL = funcUrls['promotions'] || funcUrls['site-content'];
   const { toast } = useToast();
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function Promotions() {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data.success) {
         toast({
           title: 'Успешно!',
           description: data.message || 'Вы подписались на рассылку',
@@ -78,6 +78,7 @@ export default function Promotions() {
         });
       }
     } catch (error) {
+      console.error('Subscribe error:', error);
       toast({
         title: 'Ошибка',
         description: 'Не удалось подключиться к серверу',

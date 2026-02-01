@@ -30,7 +30,7 @@ export default function AdminPromotions() {
   });
   const [editingId, setEditingId] = useState<number | null>(null);
   const { toast } = useToast();
-  const API_URL = funcUrls['site-content'];
+  const API_URL = funcUrls['promotions'] || funcUrls['site-content'];
 
   useEffect(() => {
     loadPromotions();

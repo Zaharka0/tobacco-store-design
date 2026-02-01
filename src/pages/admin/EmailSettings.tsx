@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
+import funcUrls from '../../../backend/func2url.json';
 
 export default function EmailSettings() {
   const [testEmail, setTestEmail] = useState('');
   const [sending, setSending] = useState(false);
   const [smtpStatus, setSmtpStatus] = useState<any>(null);
   const { toast } = useToast();
+  const API_URL = funcUrls['promotions'] || 'https://functions.poehali.dev/promotions-temp';
 
   const handleTestEmail = async () => {
     if (!testEmail || !testEmail.includes('@')) {
@@ -24,8 +26,7 @@ export default function EmailSettings() {
     setSmtpStatus(null);
 
     try {
-      // Попытка отправить через новую функцию
-      const response = await fetch('https://functions.poehali.dev/email-sender?action=test', {
+      const response = await fetch(`${API_URL}?action=test-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: testEmail })
