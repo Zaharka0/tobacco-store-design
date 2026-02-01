@@ -30,7 +30,7 @@ export default function AdminPromotions() {
   });
   const [editingId, setEditingId] = useState<number | null>(null);
   const { toast } = useToast();
-  const API_URL = funcUrls['site-content'];
+  const API_URL = funcUrls['promotions'] || funcUrls['site-content'];
 
   useEffect(() => {
     loadPromotions();
@@ -39,8 +39,29 @@ export default function AdminPromotions() {
   const loadPromotions = async () => {
     setLoading(true);
     try {
+      if (!API_URL) {
+        toast({
+          title: 'Ошибка',
+          description: 'Backend функция не настроена',
+          variant: 'destructive'
+        });
+        setPromotions([]);
+        setLoading(false);
+        return;
+      }
       const res = await fetch(`${API_URL}?action=promotions`);
       if (!res.ok) throw new Error('Failed to load promotions');
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        toast({
+          title: 'Backend не готов',
+          description: 'Функция акций ещё не развёрнута',
+          variant: 'destructive'
+        });
+        setPromotions([]);
+        setLoading(false);
+        return;
+      }
       const data = await res.json();
       setPromotions(Array.isArray(data) ? data : []);
     } catch (error) {

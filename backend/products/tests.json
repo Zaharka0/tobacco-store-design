@@ -11,6 +11,12 @@
       "method": "GET",
       "path": "/?category=Одноразовые",
       "expectedStatus": 200
+    },
+    {
+      "name": "Получить все акции",
+      "method": "GET",
+      "path": "/?action=promotions",
+      "expectedStatus": 200
     }
   ]
 }
