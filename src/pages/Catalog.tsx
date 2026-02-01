@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
 import MobileMenu from '@/components/MobileMenu';
+import ThemeToggle from '@/components/ThemeToggle';
 
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
@@ -97,6 +98,7 @@ export default function Catalog() {
               <Link to="/delivery" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
+              <ThemeToggle />
               <Button 
                 variant="outline" 
                 size="sm" 

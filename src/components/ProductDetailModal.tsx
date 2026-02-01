@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import ShareButton from '@/components/ShareButton';
 
 
 interface Product {
@@ -95,18 +96,27 @@ export default function ProductDetailModal({ product, open, onOpenChange }: Prod
               </div>
             )}
 
-            <Button 
-              className="w-full" 
-              size="lg"
-              onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
-            >
-              <Icon name="MessageCircle" size={20} className="mr-2" />
-              Заказать в Telegram
-            </Button>
-            
-            <p className="text-sm text-center text-muted-foreground">
-              Свяжитесь с нами через Telegram-бота для оформления заказа
-            </p>
+            <div className="space-y-3">
+              <Button 
+                className="w-full" 
+                size="lg"
+                onClick={() => window.open('https://t.me/whiteshishka_bot', '_blank')}
+              >
+                <Icon name="MessageCircle" size={20} className="mr-2" />
+                Заказать в Telegram
+              </Button>
+              
+              <div className="flex justify-center">
+                <ShareButton 
+                  productName={product.name}
+                  productImage={product.image_url}
+                />
+              </div>
+              
+              <p className="text-sm text-center text-muted-foreground">
+                Свяжитесь с нами через Telegram-бота для оформления заказа
+              </p>
+            </div>
           </div>
         </div>
       </DialogContent>

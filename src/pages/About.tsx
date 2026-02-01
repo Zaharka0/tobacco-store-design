@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import MobileMenu from '@/components/MobileMenu';
+import ThemeToggle from '@/components/ThemeToggle';
 
 
 export default function About() {
@@ -26,6 +27,7 @@ export default function About() {
               <Link to="/delivery" className="text-sm lg:text-base text-muted-foreground hover:text-foreground transition-colors">Доставка</Link>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
+              <ThemeToggle />
               <Button 
                 variant="outline" 
                 size="sm" 

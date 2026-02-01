@@ -9,6 +9,7 @@ import { useSiteTexts } from '@/hooks/useSiteTexts';
 import { Link } from 'react-router-dom';
 import ProductDetailModal from '@/components/ProductDetailModal';
 import MobileMenu from '@/components/MobileMenu';
+import ThemeToggle from '@/components/ThemeToggle';
 import { useToast } from '@/hooks/use-toast';
 
 const API_URL = 'https://functions.poehali.dev/c081b0cd-f1c8-458a-8d98-7d416cd99718';
@@ -108,6 +109,8 @@ export default function Index() {
                 <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-sm font-medium whitespace-nowrap">{onlineUsers} {getText('nav_online_label', 'онлайн')}</span>
               </div>
+
+              <ThemeToggle />
 
               <Button 
                 variant="outline" 

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import MobileMenu from '@/components/MobileMenu';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Privacy() {
   return (
@@ -23,6 +24,7 @@ export default function Privacy() {
               <Link to="/privacy" className="text-sm lg:text-base text-foreground font-medium">Конфиденциальность</Link>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
+              <ThemeToggle />
               <Button 
                 variant="outline" 
                 size="sm" 
