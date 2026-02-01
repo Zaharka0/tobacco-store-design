@@ -1,7 +1,7 @@
 {
   "tests": [
     {
-      "name": "Получить товары с лимитом 100",
+      "name": "Получить список товаров",
       "method": "GET",
       "path": "/?limit=100",
       "expectedStatus": 200
