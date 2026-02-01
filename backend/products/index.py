@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 
 def handler(event: dict, context) -> dict:
-    '''API для управления товарами магазина, акциями и email-рассылкой'''
+    '''API для управления товарами магазина, акциями и email-рассылкой.'''
     
     method = event.get('httpMethod', 'GET')
     params = event.get('queryStringParameters') or {}
