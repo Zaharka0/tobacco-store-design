@@ -82,7 +82,7 @@ export default function ProductDetailModal({ product, open, onOpenChange }: Prod
               </p>
             </div>
 
-            {Object.keys(product.features).length > 0 && (
+            {product.features && Object.keys(product.features).length > 0 && (
               <div>
                 <h3 className="text-lg font-semibold mb-3">Характеристики</h3>
                 <div className="space-y-2">
