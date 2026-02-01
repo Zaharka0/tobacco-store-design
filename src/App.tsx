@@ -20,7 +20,6 @@ import AdminTexts from "./pages/AdminTexts";
 import AdminBot from "./pages/AdminBot";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminPromotions from "./pages/AdminPromotions";
-import AdminEmailSettings from "./pages/admin/EmailSettings";
 import UserProfile from "./pages/UserProfile";
 import NotFound from "./pages/NotFound";
 
@@ -48,7 +47,6 @@ const App = () => (
             <Route path="/admin/bot" element={<ProtectedRoute><AdminBot /></ProtectedRoute>} />
             <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
             <Route path="/admin/promotions" element={<ProtectedRoute><AdminPromotions /></ProtectedRoute>} />
-            <Route path="/admin/email" element={<ProtectedRoute><AdminEmailSettings /></ProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
