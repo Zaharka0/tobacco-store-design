@@ -43,10 +43,25 @@ export default function Catalog() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error('Failed to load products');
-      const data = await response.json();
-      setProducts(Array.isArray(data) ? data : []);
+      // Загружаем все товары (по 10 за раз из-за больших изображений)
+      let allProducts: Product[] = [];
+      let offset = 0;
+      const limit = 10;
+      
+      while (true) {
+        const response = await fetch(`${API_URL}?limit=${limit}&offset=${offset}`);
+        if (!response.ok) throw new Error('Failed to load products');
+        const data = await response.json();
+        const batch = Array.isArray(data) ? data : [];
+        
+        if (batch.length === 0) break;
+        allProducts = [...allProducts, ...batch];
+        
+        if (batch.length < limit) break;
+        offset += limit;
+      }
+      
+      setProducts(allProducts);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load products');
       setProducts([]);

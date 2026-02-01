@@ -17,7 +17,8 @@ def handler(event: dict, context) -> dict:
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type'
             },
-            'body': ''
+            'body': '',
+            'isBase64Encoded': False
         }
     
     # Подключение к БД
@@ -39,29 +40,34 @@ def handler(event: dict, context) -> dict:
                     return {
                         'statusCode': 404,
                         'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                        'body': json.dumps({'error': 'Товар не найден'})
+                        'body': json.dumps({'error': 'Товар не найден'}),
+                        'isBase64Encoded': False
                     }
                 
                 return {
                     'statusCode': 200,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps(dict(product), ensure_ascii=False)
+                    'body': json.dumps(dict(product), ensure_ascii=False),
+                    'isBase64Encoded': False
                 }
             else:
-                # Получить все товары
+                # Получить все товары с пагинацией
                 category = params.get('category')
+                limit = int(params.get('limit', '10'))  # Максимум 10 товаров за раз (из-за больших изображений)
+                offset = int(params.get('offset', '0'))
                 
                 if category:
-                    cursor.execute(f'SELECT * FROM {schema}.products WHERE category = %s ORDER BY created_at DESC', (category,))
+                    cursor.execute(f'SELECT * FROM {schema}.products WHERE category = %s ORDER BY created_at DESC LIMIT %s OFFSET %s', (category, limit, offset))
                 else:
-                    cursor.execute(f'SELECT * FROM {schema}.products ORDER BY created_at DESC')
+                    cursor.execute(f'SELECT * FROM {schema}.products ORDER BY created_at DESC LIMIT %s OFFSET %s', (limit, offset))
                 
                 products = cursor.fetchall()
                 
                 return {
                     'statusCode': 200,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps([dict(p) for p in products], ensure_ascii=False, default=str)
+                    'body': json.dumps([dict(p) for p in products], ensure_ascii=False, default=str),
+                    'isBase64Encoded': False
                 }
         
         elif method == 'POST':
@@ -92,7 +98,8 @@ def handler(event: dict, context) -> dict:
             return {
                 'statusCode': 201,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                'body': json.dumps(dict(product), ensure_ascii=False, default=str)
+                'body': json.dumps(dict(product), ensure_ascii=False, default=str),
+                'isBase64Encoded': False
             }
         
         elif method == 'PUT':
@@ -136,13 +143,15 @@ def handler(event: dict, context) -> dict:
                 return {
                     'statusCode': 404,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps({'error': 'Товар не найден'})
+                    'body': json.dumps({'error': 'Товар не найден'}),
+                    'isBase64Encoded': False
                 }
             
             return {
                 'statusCode': 200,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                'body': json.dumps(dict(product), ensure_ascii=False, default=str)
+                'body': json.dumps(dict(product), ensure_ascii=False, default=str),
+                'isBase64Encoded': False
             }
         
         elif method == 'DELETE':
@@ -154,7 +163,8 @@ def handler(event: dict, context) -> dict:
                 return {
                     'statusCode': 400,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps({'error': 'Не указан ID товара'})
+                    'body': json.dumps({'error': 'Не указан ID товара'}),
+                    'isBase64Encoded': False
                 }
             
             cursor.execute(f'DELETE FROM {schema}.products WHERE id = %s RETURNING id', (product_id,))
@@ -165,19 +175,22 @@ def handler(event: dict, context) -> dict:
                 return {
                     'statusCode': 404,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps({'error': 'Товар не найден'})
+                    'body': json.dumps({'error': 'Товар не найден'}),
+                    'isBase64Encoded': False
                 }
             
             return {
                 'statusCode': 200,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                'body': json.dumps({'message': 'Товар удален'})
+                'body': json.dumps({'message': 'Товар удален'}),
+                'isBase64Encoded': False
             }
         
         return {
             'statusCode': 405,
             'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-            'body': json.dumps({'error': 'Метод не поддерживается'})
+            'body': json.dumps({'error': 'Метод не поддерживается'}),
+            'isBase64Encoded': False
         }
     
     finally:
