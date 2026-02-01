@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Link } from 'react-router-dom';
 import MobileMenu from '@/components/MobileMenu';
-import { useToast } from '@/hooks/use-toast';
 
 import funcUrls from '../../backend/func2url.json';
 
@@ -22,10 +21,7 @@ interface Promotion {
 export default function Promotions() {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
-  const [subscribing, setSubscribing] = useState(false);
   const API_URL = funcUrls['site-content'];
-  const { toast } = useToast();
 
   useEffect(() => {
     loadPromotions();
@@ -41,50 +37,6 @@ export default function Promotions() {
       console.error('Error loading promotions:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSubscribe = async () => {
-    if (!email || !email.includes('@')) {
-      toast({
-        title: 'Ошибка',
-        description: 'Введите корректный email адрес',
-        variant: 'destructive'
-      });
-      return;
-    }
-
-    setSubscribing(true);
-    try {
-      const res = await fetch(`${API_URL}?action=newsletter-subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        toast({
-          title: 'Успешно!',
-          description: data.message || 'Вы подписались на рассылку',
-        });
-        setEmail('');
-      } else {
-        toast({
-          title: 'Ошибка',
-          description: data.error || 'Не удалось подписаться',
-          variant: 'destructive'
-        });
-      }
-    } catch (error) {
-      toast({
-        title: 'Ошибка',
-        description: 'Не удалось подключиться к серверу',
-        variant: 'destructive'
-      });
-    } finally {
-      setSubscribing(false);
     }
   };
 
@@ -191,28 +143,15 @@ export default function Promotions() {
                 <p className="text-muted-foreground mb-6">
                   Подпишитесь на рассылку и узнавайте первыми о специальных предложениях и эксклюзивных скидках
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <div className="flex gap-3 max-w-md mx-auto">
                   <input
                     type="email"
                     placeholder="Ваш email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
-                    disabled={subscribing}
-                    className="flex-1 px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary w-full"
+                    className="flex-1 px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  <Button 
-                    onClick={handleSubscribe} 
-                    disabled={subscribing}
-                    className="gap-2 w-full sm:w-auto whitespace-nowrap"
-                  >
-                    {subscribing ? (
-                      <Icon name="Loader2" size={18} className="animate-spin" />
-                    ) : (
-                      <Icon name="Send" size={18} />
-                    )}
-                    <span className="hidden sm:inline">{subscribing ? 'Отправка...' : 'Подписаться'}</span>
-                    <span className="sm:hidden">OK</span>
+                  <Button className="gap-2">
+                    <Icon name="Send" size={18} />
+                    Подписаться
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-4">

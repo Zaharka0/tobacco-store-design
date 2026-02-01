@@ -112,7 +112,7 @@ export default function UserProfile() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex gap-3">
                 <div className="flex-1">
                   <Label htmlFor="phone">Номер телефона</Label>
                   <Input
@@ -125,7 +125,7 @@ export default function UserProfile() {
                   />
                 </div>
                 <div className="flex items-end">
-                  <Button onClick={searchOrders} disabled={loading || !phone.trim()} className="w-full sm:w-auto">
+                  <Button onClick={searchOrders} disabled={loading || !phone.trim()}>
                     {loading ? (
                       <Icon name="Loader2" className="animate-spin mr-2" size={16} />
                     ) : (
