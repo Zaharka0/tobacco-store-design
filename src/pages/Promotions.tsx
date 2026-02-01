@@ -33,8 +33,19 @@ export default function Promotions() {
 
   const loadPromotions = async () => {
     try {
+      if (!API_URL) {
+        console.warn('API URL not configured');
+        setLoading(false);
+        return;
+      }
       const res = await fetch(`${API_URL}?action=promotions`);
       if (!res.ok) throw new Error('Failed to load');
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.warn('Backend not deployed yet');
+        setLoading(false);
+        return;
+      }
       const data = await res.json();
       setPromotions(data.filter((p: Promotion) => p.is_active));
     } catch (error) {
