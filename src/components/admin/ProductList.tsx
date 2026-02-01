@@ -43,6 +43,10 @@ export default function ProductList({ products, loading, onEdit, onDelete }: Pro
                   src={product.image_url}
                   alt={product.name}
                   className="w-20 h-20 object-cover rounded"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://placehold.co/80x80/1a1a1a/gray?text=No+Image';
+                  }}
                 />
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">

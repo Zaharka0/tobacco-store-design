@@ -46,6 +46,10 @@ export default function ProductDetailModal({ product, open, onOpenChange }: Prod
                 src={product.image_url}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://placehold.co/400x400/1a1a1a/gray?text=No+Image';
+                }}
               />
               {product.is_new && (
                 <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground">
