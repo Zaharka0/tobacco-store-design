@@ -221,10 +221,6 @@ export default function Catalog() {
                             src={product.image_url} 
                             alt={product.name}
                             className="w-full h-32 md:h-40 object-cover group-hover:scale-110 transition-transform duration-300"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = 'https://placehold.co/400x400/1a1a1a/gray?text=No+Image';
-                            }}
                           />
                           {product.is_new && (
                             <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground text-[10px] md:text-xs px-1.5 md:px-2 py-0.5">

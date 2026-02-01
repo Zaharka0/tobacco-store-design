@@ -51,22 +51,30 @@ def handler(event: dict, context) -> dict:
                     'isBase64Encoded': False
                 }
             else:
-                # Получить все товары с пагинацией (без больших изображений)
+                # Получить все товары с пагинацией
                 category = params.get('category')
                 limit = int(params.get('limit', '100'))
                 offset = int(params.get('offset', '0'))
                 
                 if category:
-                    cursor.execute(f'SELECT id, name, price, category, short_description, in_stock, is_new, discount, created_at, updated_at FROM {schema}.products WHERE category = %s ORDER BY created_at DESC LIMIT %s OFFSET %s', (category, limit, offset))
+                    cursor.execute(f'SELECT * FROM {schema}.products WHERE category = %s ORDER BY created_at DESC LIMIT %s OFFSET %s', (category, limit, offset))
                 else:
-                    cursor.execute(f'SELECT id, name, price, category, short_description, in_stock, is_new, discount, created_at, updated_at FROM {schema}.products ORDER BY created_at DESC LIMIT %s OFFSET %s', (limit, offset))
+                    cursor.execute(f'SELECT * FROM {schema}.products ORDER BY created_at DESC LIMIT %s OFFSET %s', (limit, offset))
                 
                 products = cursor.fetchall()
+                
+                # Заменить base64 изображения на placeholder
+                products_list = []
+                for p in products:
+                    product = dict(p)
+                    if product.get('image_url', '').startswith('data:'):
+                        product['image_url'] = 'https://placehold.co/400x400/1a1a1a/gray?text=No+Image'
+                    products_list.append(product)
                 
                 return {
                     'statusCode': 200,
                     'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    'body': json.dumps([dict(p) for p in products], ensure_ascii=False, default=str),
+                    'body': json.dumps(products_list, ensure_ascii=False, default=str),
                     'isBase64Encoded': False
                 }
         
