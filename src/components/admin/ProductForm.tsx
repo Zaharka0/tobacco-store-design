@@ -97,10 +97,10 @@ export default function ProductForm({
           </div>
 
           <div>
-            <Label>Product Image</Label>
             <ImageUploader
-              onImageUpload={(url) => setFormData({ ...formData, image_url: url })}
-              currentImage={formData.image_url}
+              value={formData.image_url}
+              onChange={(url) => setFormData({ ...formData, image_url: url })}
+              label="Product Image"
             />
           </div>
 
