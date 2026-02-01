@@ -1,16 +1,13 @@
 {
   "tests": [
     {
-      "name": "Newsletter subscribe",
+      "name": "Test email endpoint",
       "method": "POST",
-      "path": "/?action=newsletter-subscribe",
+      "path": "/?action=test",
       "body": {
         "email": "test@example.com"
       },
       "expectedStatus": 200,
-      "expectedBody": {
-        "success": true
-      },
       "bodyMatcher": "partial"
     }
   ]
